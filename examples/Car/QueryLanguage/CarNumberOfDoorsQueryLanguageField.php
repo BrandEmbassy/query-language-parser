@@ -18,6 +18,7 @@ use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSuppo
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\NumericValueParserCreator;
+use BrandEmbassy\QueryLanguageParser\Value\PositiveIntegerValueParserCreator;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\StringParser;
@@ -63,7 +64,7 @@ final class CarNumberOfDoorsQueryLanguageField
      */
     public function createSingleValueParser(): MonoParser
     {
-        return NumericValueParserCreator::create();
+        return PositiveIntegerValueParserCreator::create();
     }
 
 

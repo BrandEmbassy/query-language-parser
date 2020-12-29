@@ -2,12 +2,12 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Value;
 
+use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarRuleIdentifier;
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\GreedyMultiParser;
 use Ferno\Loco\MonoParser;
 use Nette\StaticClass;
-use QueryLanguageGrammarRuleIdentifier;
 
 final class MultipleValuesExpressionParserCreator
 {

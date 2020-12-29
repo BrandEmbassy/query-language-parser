@@ -103,12 +103,12 @@ final class CarColorQueryLanguageField
 
     public function createIsNullOperatorOutput($fieldName)
     {
-        return new CarHasColorFilter();
+        return new NotFilter(new CarHasColorFilter());
     }
 
 
     public function createIsNotNullOperatorOutput($fieldName)
     {
-        return new NotFilter(new CarHasColorFilter());
+        return new CarHasColorFilter();
     }
 }

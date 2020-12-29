@@ -19,6 +19,15 @@ final class CarColorFilter implements CarFilter
     }
 
 
+    /**
+     * @return string[]
+     */
+    public function getColors(): array
+    {
+        return $this->colors;
+    }
+
+
     public function evaluate(Car $car): bool
     {
         return in_array($car->getColor(), $this->colors, true);

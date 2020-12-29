@@ -22,6 +22,15 @@ final class CarNumberOfDoorsFilter implements CarFilter
     }
 
 
+    /**
+     * @return int[]
+     */
+    public function getNumberOfDoors(): array
+    {
+        return $this->numberOfDoors;
+    }
+
+
     public function evaluate(Car $car): bool
     {
         return in_array($car->getNumberOfDoors(), $this->numberOfDoors, true);

@@ -9,23 +9,23 @@ final class AndFilter implements CarFilter
     /**
      * @var CarFilter
      */
-    private $leftCondition;
+    private $leftFilter;
 
     /**
      * @var CarFilter
      */
-    private $rightCondition;
+    private $rightFilter;
 
 
-    public function __construct(CarFilter $leftCondition, CarFilter $rightCondition)
+    public function __construct(CarFilter $leftFilter, CarFilter $rightFilter)
     {
-        $this->leftCondition = $leftCondition;
-        $this->rightCondition = $rightCondition;
+        $this->leftFilter = $leftFilter;
+        $this->rightFilter = $rightFilter;
     }
 
 
     public function evaluate(Car $car): bool
     {
-        return $this->leftCondition->evaluate($car) && $this->rightCondition->evaluate($car);
+        return $this->leftFilter->evaluate($car) && $this->rightFilter->evaluate($car);
     }
 }

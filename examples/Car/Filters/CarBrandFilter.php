@@ -22,6 +22,15 @@ final class CarBrandFilter implements CarFilter
     }
 
 
+    /**
+     * @return string[]
+     */
+    public function getBrands(): array
+    {
+        return $this->brands;
+    }
+
+
     public function evaluate(Car $car): bool
     {
         return in_array($car->getBrand(), $this->brands, true);

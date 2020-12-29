@@ -17,7 +17,7 @@ use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\NotEqualToQueryLanguage
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\NotInQueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\QueryParser;
 
-final class QueryParserFactory
+final class CarQueryParserFactory
 {
     public function create(): QueryParser
     {

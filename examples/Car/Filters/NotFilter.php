@@ -9,17 +9,23 @@ final class NotFilter implements CarFilter
     /**
      * @var CarFilter
      */
-    private $subCondition;
+    private $subFilter;
 
 
-    public function __construct(CarFilter $subCondition)
+    public function __construct(CarFilter $subFilter)
     {
-        $this->subCondition = $subCondition;
+        $this->subFilter = $subFilter;
+    }
+
+
+    public function getSubFilter(): CarFilter
+    {
+        return $this->subFilter;
     }
 
 
     public function evaluate(Car $car): bool
     {
-        return !$this->subCondition->evaluate($car);
+        return !$this->subFilter->evaluate($car);
     }
 }

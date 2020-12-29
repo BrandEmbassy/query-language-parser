@@ -18,6 +18,12 @@ final class CarNumberOfDoorsGreaterThanFilter implements CarFilter
     }
 
 
+    public function getNumberOfDoors(): int
+    {
+        return $this->numberOfDoors;
+    }
+
+
     public function evaluate(Car $car): bool
     {
         return $car->getNumberOfDoors() > $this->numberOfDoors;
