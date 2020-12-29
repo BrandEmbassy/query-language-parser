@@ -3,7 +3,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "BrandEmbassy\\QueryLanguageParser\\": "src"
+            "BrandEmbassy\\QueryLanguageParser\\": "src",
+            "BrandEmbassy\\QueryLanguageParser\\Examples\\": "examples"
         }
     },
     "require": {
