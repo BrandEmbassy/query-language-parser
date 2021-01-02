@@ -24,6 +24,18 @@ final class AndFilter implements CarFilter
     }
 
 
+    public function getLeftFilter(): CarFilter
+    {
+        return $this->leftFilter;
+    }
+
+
+    public function getRightFilter(): CarFilter
+    {
+        return $this->rightFilter;
+    }
+
+
     public function evaluate(Car $car): bool
     {
         return $this->leftFilter->evaluate($car) && $this->rightFilter->evaluate($car);
