@@ -13,6 +13,8 @@ final class UuidParserCreator
 {
     use StaticClass;
 
+    private const REGEX = '\A[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\z';
+
 
     /**
      * @throws GrammarException
@@ -20,7 +22,7 @@ final class UuidParserCreator
     public static function create(): MonoParser
     {
         return new RegexParser(
-            '/^[0-9a-f\-]+/',
+            '/^' . self::REGEX . '/',
             static function ($value): UuidInterface {
                 return Uuid::fromString($value);
             }

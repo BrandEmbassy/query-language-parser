@@ -6,7 +6,6 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
-use function strpos;
 
 final class PositiveIntegerValueParserCreator
 {
@@ -20,8 +19,8 @@ final class PositiveIntegerValueParserCreator
     {
         return new RegexParser(
             '#^[1-9][0-9]*#',
-            static function ($value) {
-                return strpos($value, '.') === false ? (int)$value : (float)$value;
+            static function ($value): int {
+                return (int)$value;
             }
         );
     }
