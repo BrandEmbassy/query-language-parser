@@ -8,6 +8,7 @@ use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperatorParserCreator
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
+use function assert;
 
 final class NotEqualToQueryLanguageOperator implements QueryLanguageOperator
 {
@@ -21,8 +22,6 @@ final class NotEqualToQueryLanguageOperator implements QueryLanguageOperator
 
 
     /**
-     * @return MonoParser
-     *
      * @throws GrammarException
      */
     public function createOperatorParser(): MonoParser

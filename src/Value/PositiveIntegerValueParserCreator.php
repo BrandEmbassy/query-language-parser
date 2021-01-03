@@ -6,6 +6,7 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
+use function strpos;
 
 final class PositiveIntegerValueParserCreator
 {
@@ -13,8 +14,6 @@ final class PositiveIntegerValueParserCreator
 
 
     /**
-     * @return MonoParser
-     *
      * @throws GrammarException
      */
     public static function create(): MonoParser

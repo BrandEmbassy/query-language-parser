@@ -8,7 +8,7 @@ interface QueryLanguageFieldSupportingNotInOperator extends QueryLanguageFieldSu
 {
     /**
      * @param mixed $fieldName output of field name parser
-     * @param mixed[] $values output of multiple values parser
+     * @param mixed[] $values    output of multiple values parser
      *
      * @return mixed
      */

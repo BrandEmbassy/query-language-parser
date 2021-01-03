@@ -30,8 +30,6 @@ final class QueryParser
 
 
     /**
-     * @param string $query
-     *
      * @return mixed|null
      *
      * @throws UnableToParseQueryException
@@ -45,7 +43,6 @@ final class QueryParser
             $grammar = $this->grammarFactory->create($fields, $operators);
 
             return $grammar->parse($query);
-
         } catch (GrammarException | ParseFailureException $e) {
             throw UnableToParseQueryException::byOtherException($e);
         }

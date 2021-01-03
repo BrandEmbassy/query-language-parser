@@ -11,8 +11,6 @@ final class IsNotNullQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider
-     *
-     * @param string $query
      */
     public function testOperatorCanBeParsed(string $query): void
     {

@@ -18,9 +18,6 @@ final class QueryParserTest extends TestCase
 {
     /**
      * @dataProvider queryToParseProvider
-     *
-     * @param callable $expectedFilterMatcher
-     * @param string $query
      */
     public function testCaseQueryIsParsed(callable $expectedFilterMatcher, string $query): void
     {
@@ -247,8 +244,6 @@ final class QueryParserTest extends TestCase
 
     /**
      * @dataProvider fieldsAndOperatorsToParseProvider
-     *
-     * @param string $query
      */
     public function testAllFieldsAndOperatorsCanBeParsed(string $query): void
     {
@@ -294,7 +289,6 @@ final class QueryParserTest extends TestCase
 
     /**
      * @param string[] $expectedBrands
-     * @param CarFilter|null $filter
      */
     private function assertCarBrandFilter(array $expectedBrands, ?CarFilter $filter): void
     {
@@ -305,7 +299,6 @@ final class QueryParserTest extends TestCase
 
     /**
      * @param string[] $expectedColors
-     * @param CarFilter|null $filter
      */
     private function assertCarColorFilter(array $expectedColors, ?CarFilter $filter): void
     {

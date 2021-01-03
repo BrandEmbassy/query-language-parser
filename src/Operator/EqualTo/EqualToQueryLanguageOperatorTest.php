@@ -6,13 +6,12 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use function assert;
 
 final class EqualToQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider
-     *
-     * @param string $query
      */
     public function testOperatorCanBeParsed(string $query): void
     {

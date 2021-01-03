@@ -8,11 +8,12 @@ use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\LazyAltParser;
 use Ferno\Loco\MonoParser;
+use function array_keys;
+use function array_merge;
 
 final class QueryLanguageFieldGrammarFactory
 {
     /**
-     * @param QueryLanguageField $field
      * @param QueryLanguageOperator[] $operators
      *
      * @return MonoParser[]
@@ -38,8 +39,6 @@ final class QueryLanguageFieldGrammarFactory
 
 
     /**
-     * @param QueryLanguageField $field
-     *
      * @return MonoParser[]
      */
     private function getValueParsers(QueryLanguageField $field): array
@@ -59,7 +58,6 @@ final class QueryLanguageFieldGrammarFactory
 
 
     /**
-     * @param QueryLanguageField $field
      * @param QueryLanguageOperator[] $operators
      *
      * @return MonoParser[]

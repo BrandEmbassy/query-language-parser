@@ -15,10 +15,6 @@ final class QueryLanguageOperatorParserCreator
 
 
     /**
-     * @param string $operator
-     *
-     * @return MonoParser
-     *
      * @throws GrammarException
      */
     public static function createSignOperatorParser(string $operator): MonoParser
@@ -35,8 +31,6 @@ final class QueryLanguageOperatorParserCreator
 
     /**
      * @param string[] ...$words
-     *
-     * @return MonoParser
      *
      * @throws GrammarException
      */
@@ -55,8 +49,6 @@ final class QueryLanguageOperatorParserCreator
 
     /**
      * @param string[] ...$words
-     *
-     * @return MonoParser
      *
      * @throws GrammarException
      */

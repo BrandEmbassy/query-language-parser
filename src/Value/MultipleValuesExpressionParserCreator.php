@@ -8,6 +8,7 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\GreedyMultiParser;
 use Ferno\Loco\MonoParser;
 use Nette\StaticClass;
+use function array_merge;
 
 final class MultipleValuesExpressionParserCreator
 {
@@ -16,8 +17,6 @@ final class MultipleValuesExpressionParserCreator
 
     /**
      * @param MonoParser|string $singleValueParser
-     *
-     * @return MonoParser
      *
      * @throws GrammarException
      */

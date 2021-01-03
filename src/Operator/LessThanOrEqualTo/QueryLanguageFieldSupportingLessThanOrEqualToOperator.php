@@ -4,12 +4,11 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\LessThanOrEqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
 
-interface QueryLanguageFieldSupportingLessThanOrEqualToOperator
-    extends QueryLanguageFieldSupportingSingleValueOperator
+interface QueryLanguageFieldSupportingLessThanOrEqualToOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
     /**
      * @param mixed $fieldName output of field name parser
-     * @param mixed $value output of single value parser
+     * @param mixed $value     output of single value parser
      *
      * @return mixed
      */

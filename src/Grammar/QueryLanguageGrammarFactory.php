@@ -14,6 +14,8 @@ use Ferno\Loco\LazyAltParser;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Ferno\Loco\StringParser;
+use function array_map;
+use function array_merge;
 
 final class QueryLanguageGrammarFactory
 {
@@ -40,8 +42,6 @@ final class QueryLanguageGrammarFactory
     /**
      * @param QueryLanguageField[] $fields
      * @param QueryLanguageOperator[] $operators
-     *
-     * @return Grammar
      *
      * @throws GrammarException
      */
@@ -193,10 +193,6 @@ final class QueryLanguageGrammarFactory
 
 
     /**
-     * @param string $operator
-     *
-     * @return MonoParser
-     *
      * @throws GrammarException
      */
     private function createNotOperatorParser(string $operator): MonoParser
@@ -213,8 +209,6 @@ final class QueryLanguageGrammarFactory
 
     /**
      * @param string[] ...$words
-     *
-     * @return MonoParser
      *
      * @throws GrammarException
      */

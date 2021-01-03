@@ -15,8 +15,6 @@ final class UuidParserCreator
 
 
     /**
-     * @return MonoParser
-     *
      * @throws GrammarException
      */
     public static function create(): MonoParser

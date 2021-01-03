@@ -13,8 +13,6 @@ final class StringValueParserCreator
 
 
     /**
-     * @return MonoParser
-     *
      * @throws GrammarException
      */
     public static function create(): MonoParser

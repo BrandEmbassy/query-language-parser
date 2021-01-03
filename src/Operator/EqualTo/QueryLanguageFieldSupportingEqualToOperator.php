@@ -8,7 +8,7 @@ interface QueryLanguageFieldSupportingEqualToOperator extends QueryLanguageField
 {
     /**
      * @param mixed $fieldName output of field name parser
-     * @param mixed $value output of single value parser
+     * @param mixed $value     output of single value parser
      *
      * @return mixed
      */
