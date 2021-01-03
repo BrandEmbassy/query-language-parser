@@ -212,7 +212,7 @@ final class QueryLanguageGrammarFactory
 
 
     /**
-     * @param array<int, string> $words
+     * @param string[] ...$words
      *
      * @return MonoParser
      *

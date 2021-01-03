@@ -34,7 +34,7 @@ final class QueryLanguageOperatorParserCreator
 
 
     /**
-     * @param array<int, string> $words
+     * @param string[] ...$words
      *
      * @return MonoParser
      *
@@ -54,7 +54,7 @@ final class QueryLanguageOperatorParserCreator
 
 
     /**
-     * @param array<int, string> $words
+     * @param string[] ...$words
      *
      * @return MonoParser
      *

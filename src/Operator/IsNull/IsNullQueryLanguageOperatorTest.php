@@ -26,6 +26,9 @@ final class IsNullQueryLanguageOperatorTest extends TestCase
     }
 
 
+    /**
+     * @return string[][]
+     */
     public function queryToBeParsedProvider(): array
     {
         return [

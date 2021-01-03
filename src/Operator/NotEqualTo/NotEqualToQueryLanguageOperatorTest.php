@@ -29,6 +29,9 @@ final class NotEqualToQueryLanguageOperatorTest extends TestCase
     }
 
 
+    /**
+     * @return string[][]
+     */
     public function queryToBeParsedProvider(): array
     {
         return [

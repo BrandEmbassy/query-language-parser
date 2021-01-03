@@ -30,6 +30,9 @@ final class NotInQueryLanguageOperatorTest extends TestCase
     }
 
 
+    /**
+     * @return mixed[]
+     */
     public function queryToBeParsedProvider(): array
     {
         return [

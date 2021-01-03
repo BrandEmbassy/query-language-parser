@@ -32,6 +32,9 @@ final class QueryParserTest extends TestCase
     }
 
 
+    /**
+     * @return mixed[]
+     */
     public function queryToParseProvider(): array
     {
         return [
@@ -257,6 +260,9 @@ final class QueryParserTest extends TestCase
     }
 
 
+    /**
+     * @return string[][]
+     */
     public function fieldsAndOperatorsToParseProvider(): array
     {
         return [

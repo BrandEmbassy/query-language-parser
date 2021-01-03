@@ -20,8 +20,8 @@ final class QueryLanguageGrammarConfiguration
 
 
     /**
-     * @param array $fields
-     * @param array $operators
+     * @param QueryLanguageField[] $fields
+     * @param QueryLanguageOperator[] $operators
      */
     public function __construct(array $fields, array $operators)
     {

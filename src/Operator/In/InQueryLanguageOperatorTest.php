@@ -26,6 +26,9 @@ final class InQueryLanguageOperatorTest extends TestCase
     }
 
 
+    /**
+     * @return mixed[]
+     */
     public function queryToBeParsedProvider(): array
     {
         return [
