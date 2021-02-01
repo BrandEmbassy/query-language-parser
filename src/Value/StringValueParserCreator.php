@@ -11,6 +11,8 @@ final class StringValueParserCreator
 {
     use StaticClass;
 
+    private const STRING_VALUE_PARSER = '/^[\w\-]+/';
+
 
     /**
      * @throws GrammarException
@@ -18,7 +20,7 @@ final class StringValueParserCreator
     public static function create(): MonoParser
     {
         return new RegexParser(
-            '/^[\w\-]+/',
+            self::STRING_VALUE_PARSER,
             static function ($value): string {
                 return (string)$value;
             }

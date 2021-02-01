@@ -11,6 +11,8 @@ final class PositiveIntegerValueParserCreator
 {
     use StaticClass;
 
+    private const POSITIVE_INTEGER_VALUE_REGEX = '#^[1-9][0-9]*#';
+
 
     /**
      * @throws GrammarException
@@ -18,7 +20,7 @@ final class PositiveIntegerValueParserCreator
     public static function create(): MonoParser
     {
         return new RegexParser(
-            '#^[1-9][0-9]*#',
+            self::POSITIVE_INTEGER_VALUE_REGEX,
             static function ($value): int {
                 return (int)$value;
             }

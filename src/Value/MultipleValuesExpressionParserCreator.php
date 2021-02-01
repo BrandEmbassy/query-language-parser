@@ -14,6 +14,9 @@ final class MultipleValuesExpressionParserCreator
 {
     use StaticClass;
 
+    private const MINIMAL_NUMBER_OF_VALUES = 0;
+    private const INFINITE_MAXIMAL_NUMBER_OF_VALUES = null;
+
 
     /**
      * @param MonoParser|string $singleValueParser
@@ -36,8 +39,8 @@ final class MultipleValuesExpressionParserCreator
                             return $value;
                         }
                     ),
-                    0,
-                    null
+                    self::MINIMAL_NUMBER_OF_VALUES,
+                    self::INFINITE_MAXIMAL_NUMBER_OF_VALUES
                 ),
                 QueryLanguageGrammarRuleIdentifier::CLOSE_BRACKET,
             ],

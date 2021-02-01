@@ -9,13 +9,13 @@ use function array_filter;
 final class CarCollection
 {
     /**
-     * @var array|Car[]
+     * @var array<int, Car>
      */
     private $cars;
 
 
     /**
-     * @param Car[] $cars
+     * @param array<int, Car> $cars
      */
     public function __construct(array $cars)
     {
@@ -38,7 +38,7 @@ final class CarCollection
 
 
     /**
-     * @return Car[]
+     * @return array<int, Car>
      */
     public function toArray(): array
     {

@@ -48,6 +48,6 @@ final class Car
 
     public function hasColor(): bool
     {
-        return $this->color !== null;
+        return (string)$this->color !== '';
     }
 }
