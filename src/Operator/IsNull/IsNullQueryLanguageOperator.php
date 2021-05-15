@@ -32,13 +32,13 @@ final class IsNullQueryLanguageOperator implements QueryLanguageOperator
 
     public function isFieldSupported(QueryLanguageField $field): bool
     {
-        return $field instanceof QueryLanguageFieldSupportIsNullOperator;
+        return $field instanceof QueryLanguageFieldSupportingIsNullOperator;
     }
 
 
     public function createFieldExpressionParser(QueryLanguageField $field): MonoParser
     {
-        assert($field instanceof QueryLanguageFieldSupportIsNullOperator);
+        assert($field instanceof QueryLanguageFieldSupportingIsNullOperator);
 
         return new ConcParser(
             [
