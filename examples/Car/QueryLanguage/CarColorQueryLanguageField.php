@@ -8,7 +8,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\EqualTo\QueryLanguageFieldSupportingEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\In\QueryLanguageFieldSupportingInOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\IsNotNull\QueryLanguageFieldSupportingIsNotNullOperator;
-use BrandEmbassy\QueryLanguageParser\Operator\IsNull\QueryLanguageFieldSupportIsNullOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\IsNull\QueryLanguageFieldSupportingIsNullOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSupportingNotEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
@@ -22,7 +22,7 @@ final class CarColorQueryLanguageField
     QueryLanguageFieldSupportingNotEqualToOperator,
     QueryLanguageFieldSupportingInOperator,
     QueryLanguageFieldSupportingNotInOperator,
-    QueryLanguageFieldSupportIsNullOperator,
+    QueryLanguageFieldSupportingIsNullOperator,
     QueryLanguageFieldSupportingIsNotNullOperator
 {
     public function getFieldIdentifier(): string

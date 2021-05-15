@@ -4,7 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\IsNull;
 
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 
-interface QueryLanguageFieldSupportIsNullOperator extends QueryLanguageField
+interface QueryLanguageFieldSupportingIsNullOperator extends QueryLanguageField
 {
     /**
      * @param mixed $fieldName output of field name parser
