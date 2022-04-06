@@ -33,6 +33,7 @@ class StringValueParserCreatorTest extends TestCase
             ['valueToParse' => 'hello'],
             ['valueToParse' => 'foo-bar'],
             ['valueToParse' => 'Foo_Bar_1234'],
+            ['valueToParse' => '<!F7:1F9@prod.o.com>'],
         ];
     }
 
@@ -57,7 +58,7 @@ class StringValueParserCreatorTest extends TestCase
     {
         return [
             ['valueToParse' => 'hello world'],
-            ['valueToParse' => 'foo#bar'],
+            ['valueToParse' => ' foobar'],
         ];
     }
 }
