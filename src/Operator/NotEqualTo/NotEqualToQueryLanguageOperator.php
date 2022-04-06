@@ -10,7 +10,10 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use function assert;
 
-final class NotEqualToQueryLanguageOperator implements QueryLanguageOperator
+/**
+ * @final
+ */
+class NotEqualToQueryLanguageOperator implements QueryLanguageOperator
 {
     private const OPERATOR_IDENTIFIER = 'operator.notEqualTo';
 
@@ -46,9 +49,7 @@ final class NotEqualToQueryLanguageOperator implements QueryLanguageOperator
                 self::OPERATOR_IDENTIFIER,
                 $field->getSingleValueParserIdentifier(),
             ],
-            static function ($identifier, $operator, $value) use ($field) {
-                return $field->createNotEqualToOperatorOutput($identifier, $value);
-            }
+            static fn($identifier, $operator, $value) => $field->createNotEqualToOperatorOutput($identifier, $value),
         );
     }
 }

@@ -14,7 +14,10 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use function assert;
 
-final class QueryParserTest extends TestCase
+/**
+ * @final
+ */
+class QueryParserTest extends TestCase
 {
     /**
      * @dataProvider queryToParseProvider

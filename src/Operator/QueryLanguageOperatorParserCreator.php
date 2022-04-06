@@ -9,7 +9,10 @@ use Ferno\Loco\MonoParser;
 use Ferno\Loco\StringParser;
 use Nette\StaticClass;
 
-final class QueryLanguageOperatorParserCreator
+/**
+ * @final
+ */
+class QueryLanguageOperatorParserCreator
 {
     use StaticClass;
 
@@ -24,7 +27,7 @@ final class QueryLanguageOperatorParserCreator
                 QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
                 new StringParser($operator),
                 QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-            ]
+            ],
         );
     }
 

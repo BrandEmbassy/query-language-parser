@@ -7,7 +7,10 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFa
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-final class IsNotNullQueryLanguageOperatorTest extends TestCase
+/**
+ * @final
+ */
+class IsNotNullQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider

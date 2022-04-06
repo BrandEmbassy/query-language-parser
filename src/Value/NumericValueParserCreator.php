@@ -8,7 +8,10 @@ use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
 use function strpos;
 
-final class NumericValueParserCreator
+/**
+ * @final
+ */
+class NumericValueParserCreator
 {
     use StaticClass;
 
@@ -22,9 +25,7 @@ final class NumericValueParserCreator
     {
         return new RegexParser(
             '#^' . self::NUMERIC_VALUE_REGEXP . '#',
-            static function ($value) {
-                return strpos($value, '.') === false ? (int)$value : (float)$value;
-            }
+            static fn($value) => strpos($value, '.') === false ? (int)$value : (float)$value,
         );
     }
 }

@@ -8,7 +8,10 @@ use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
 use function str_replace;
 
-final class TextValueParserCreator
+/**
+ * @final
+ */
+class TextValueParserCreator
 {
     use StaticClass;
 
@@ -22,9 +25,7 @@ final class TextValueParserCreator
     {
         return new RegexParser(
             self::TEXT_VALUE_PARSER,
-            static function ($value): string {
-                return str_replace(['"', '\''], '', (string)$value);
-            }
+            static fn($value): string => str_replace(['"', '\''], '', (string)$value),
         );
     }
 }

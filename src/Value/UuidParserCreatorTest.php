@@ -8,7 +8,10 @@ use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 use function assert;
 
-final class UuidParserCreatorTest extends TestCase
+/**
+ * @final
+ */
+class UuidParserCreatorTest extends TestCase
 {
     /**
      * @dataProvider validUuidProvider

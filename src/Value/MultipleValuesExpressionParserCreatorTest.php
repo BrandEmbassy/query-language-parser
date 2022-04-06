@@ -9,7 +9,10 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use function assert;
 
-final class MultipleValuesExpressionParserCreatorTest extends TestCase
+/**
+ * @final
+ */
+class MultipleValuesExpressionParserCreatorTest extends TestCase
 {
     /**
      * @dataProvider validMultipleValueExpressionProvider

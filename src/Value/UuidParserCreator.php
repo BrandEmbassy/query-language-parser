@@ -9,7 +9,10 @@ use Nette\StaticClass;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-final class UuidParserCreator
+/**
+ * @final
+ */
+class UuidParserCreator
 {
     use StaticClass;
 
@@ -23,9 +26,7 @@ final class UuidParserCreator
     {
         return new RegexParser(
             '/^' . self::REGEX . '/',
-            static function ($value): UuidInterface {
-                return Uuid::fromString($value);
-            }
+            static fn($value): UuidInterface => Uuid::fromString($value),
         );
     }
 }

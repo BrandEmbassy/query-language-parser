@@ -7,17 +7,14 @@ use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarFactory;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\ParseFailureException;
 
-final class QueryParser
+/**
+ * @final
+ */
+class QueryParser
 {
-    /**
-     * @var QueryLanguageGrammarConfiguration
-     */
-    private $grammarConfiguration;
+    private QueryLanguageGrammarConfiguration $grammarConfiguration;
 
-    /**
-     * @var QueryLanguageGrammarFactory
-     */
-    private $grammarFactory;
+    private QueryLanguageGrammarFactory $grammarFactory;
 
 
     public function __construct(

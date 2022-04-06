@@ -10,7 +10,10 @@ use Ferno\Loco\MonoParser;
 use Nette\StaticClass;
 use function array_merge;
 
-final class MultipleValuesExpressionParserCreator
+/**
+ * @final
+ */
+class MultipleValuesExpressionParserCreator
 {
     use StaticClass;
 
@@ -35,18 +38,14 @@ final class MultipleValuesExpressionParserCreator
                             QueryLanguageGrammarRuleIdentifier::COMMA,
                             $singleValueParser,
                         ],
-                        static function ($comma, $value) {
-                            return $value;
-                        }
+                        static fn($comma, $value) => $value,
                     ),
                     self::MINIMAL_NUMBER_OF_VALUES,
-                    self::INFINITE_MAXIMAL_NUMBER_OF_VALUES
+                    self::INFINITE_MAXIMAL_NUMBER_OF_VALUES,
                 ),
                 QueryLanguageGrammarRuleIdentifier::CLOSE_BRACKET,
             ],
-            static function ($openBracket, $value1, array $otherValues, $closeBracket): array {
-                return array_merge([$value1], $otherValues);
-            }
+            static fn($openBracket, $value1, array $otherValues, $closeBracket): array => array_merge([$value1], $otherValues),
         );
     }
 }

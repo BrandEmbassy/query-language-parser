@@ -7,7 +7,10 @@ use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
 
-final class PositiveIntegerValueParserCreator
+/**
+ * @final
+ */
+class PositiveIntegerValueParserCreator
 {
     use StaticClass;
 
@@ -21,9 +24,7 @@ final class PositiveIntegerValueParserCreator
     {
         return new RegexParser(
             self::POSITIVE_INTEGER_VALUE_REGEX,
-            static function ($value): int {
-                return (int)$value;
-            }
+            static fn($value): int => (int)$value,
         );
     }
 }
