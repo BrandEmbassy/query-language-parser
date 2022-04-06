@@ -10,7 +10,10 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use function assert;
 
-final class IsNullQueryLanguageOperator implements QueryLanguageOperator
+/**
+ * @final
+ */
+class IsNullQueryLanguageOperator implements QueryLanguageOperator
 {
     private const OPERATOR_IDENTIFIER = 'operator.isNull';
 
@@ -45,9 +48,7 @@ final class IsNullQueryLanguageOperator implements QueryLanguageOperator
                 $field->getFieldNameParserIdentifier(),
                 self::OPERATOR_IDENTIFIER,
             ],
-            static function ($identifier, $operator) use ($field) {
-                return $field->createIsNullOperatorOutput($identifier);
-            }
+            static fn($identifier, $operator) => $field->createIsNullOperatorOutput($identifier),
         );
     }
 }

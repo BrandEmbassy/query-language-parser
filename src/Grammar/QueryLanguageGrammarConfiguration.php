@@ -6,17 +6,20 @@ use Assert\Assertion;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
 
-final class QueryLanguageGrammarConfiguration
+/**
+ * @final
+ */
+class QueryLanguageGrammarConfiguration
 {
     /**
      * @var QueryLanguageField[]
      */
-    private $fields;
+    private array $fields;
 
     /**
      * @var QueryLanguageOperator[]
      */
-    private $operators;
+    private array $operators;
 
 
     /**

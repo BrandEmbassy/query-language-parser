@@ -7,7 +7,10 @@ use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
 
-final class StringValueParserCreator
+/**
+ * @final
+ */
+class StringValueParserCreator
 {
     use StaticClass;
 
@@ -21,9 +24,7 @@ final class StringValueParserCreator
     {
         return new RegexParser(
             self::STRING_VALUE_PARSER,
-            static function ($value): string {
-                return (string)$value;
-            }
+            static fn($value): string => (string)$value,
         );
     }
 }

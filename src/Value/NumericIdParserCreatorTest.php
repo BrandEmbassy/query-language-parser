@@ -6,7 +6,10 @@ use Ferno\Loco\ParseFailureException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-final class NumericIdParserCreatorTest extends TestCase
+/**
+ * @final
+ */
+class NumericIdParserCreatorTest extends TestCase
 {
     /**
      * @dataProvider validNumericIdProvider

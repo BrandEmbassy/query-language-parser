@@ -17,17 +17,14 @@ use Ferno\Loco\StringParser;
 use function array_map;
 use function array_merge;
 
-final class QueryLanguageGrammarFactory
+/**
+ * @final
+ */
+class QueryLanguageGrammarFactory
 {
-    /**
-     * @var QueryLanguageFieldGrammarFactory
-     */
-    private $fieldGrammarFactory;
+    private QueryLanguageFieldGrammarFactory $fieldGrammarFactory;
 
-    /**
-     * @var LogicalOperatorOutputFactory
-     */
-    private $logicalOperatorOutputFactory;
+    private LogicalOperatorOutputFactory $logicalOperatorOutputFactory;
 
 
     public function __construct(
@@ -56,12 +53,10 @@ final class QueryLanguageGrammarFactory
                             QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                             QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
                         ],
-                        static function ($whitespace1, $output, $whitespace2) {
-                            return $output;
-                        }
+                        static fn($whitespace1, $output, $whitespace2) => $output,
                     ),
                     new EmptyParser(),
-                ]
+                ],
             ),
 
             QueryLanguageGrammarRuleIdentifier::EXPRESSION => new LazyAltParser(
@@ -71,7 +66,7 @@ final class QueryLanguageGrammarFactory
                     QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
                     QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
                     QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
-                ]
+                ],
             ),
 
             QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION => new ConcParser(
@@ -80,9 +75,7 @@ final class QueryLanguageGrammarFactory
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                     QueryLanguageGrammarRuleIdentifier::CLOSE_BRACKET,
                 ],
-                static function ($openBracket, $subOutput, $closeBracket) {
-                    return $subOutput;
-                }
+                static fn($openBracket, $subOutput, $closeBracket) => $subOutput,
             ),
 
             QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION => new ConcParser(
@@ -92,9 +85,7 @@ final class QueryLanguageGrammarFactory
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                     QueryLanguageGrammarRuleIdentifier::CLOSE_BRACKET,
                 ],
-                function ($notOperator, $openBracket, $subOutput, $closeBracket) {
-                    return $this->logicalOperatorOutputFactory->createNotOperatorOutput($subOutput);
-                }
+                fn($notOperator, $openBracket, $subOutput, $closeBracket) => $this->logicalOperatorOutputFactory->createNotOperatorOutput($subOutput),
             ),
 
             QueryLanguageGrammarRuleIdentifier::AND_EXPRESSION => new ConcParser(
@@ -104,18 +95,16 @@ final class QueryLanguageGrammarFactory
                             QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
                             QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
                             QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
-                        ]
+                        ],
                     ),
                     QueryLanguageGrammarRuleIdentifier::AND_OPERATOR,
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                 ],
-                function (
+                fn(
                     $leftSubOutput,
                     $operator,
                     $rightSubOutput
-                ) {
-                    return $this->logicalOperatorOutputFactory->createAndOperatorOutput($leftSubOutput, $rightSubOutput);
-                }
+                ) => $this->logicalOperatorOutputFactory->createAndOperatorOutput($leftSubOutput, $rightSubOutput),
             ),
 
             QueryLanguageGrammarRuleIdentifier::OR_EXPRESSION => new ConcParser(
@@ -125,27 +114,23 @@ final class QueryLanguageGrammarFactory
                             QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
                             QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
                             QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
-                        ]
+                        ],
                     ),
                     QueryLanguageGrammarRuleIdentifier::OR_OPERATOR,
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                 ],
-                function (
+                fn(
                     $leftSubOutput,
                     $operator,
                     $rightSubOutput
-                ) {
-                    return $this->logicalOperatorOutputFactory->createOrOperatorOutput($leftSubOutput, $rightSubOutput);
-                }
+                ) => $this->logicalOperatorOutputFactory->createOrOperatorOutput($leftSubOutput, $rightSubOutput),
             ),
 
             QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION => new LazyAltParser(
                 array_map(
-                    static function (QueryLanguageField $field): string {
-                        return $field->getFieldIdentifier();
-                    },
-                    $fields
-                )
+                    static fn(QueryLanguageField $field): string => $field->getFieldIdentifier(),
+                    $fields,
+                ),
             ),
 
             QueryLanguageGrammarRuleIdentifier::AND_OPERATOR => $this->createLogicalOperatorParser('AND'),
@@ -156,13 +141,13 @@ final class QueryLanguageGrammarFactory
                 [
                     new StringParser('('),
                     QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-                ]
+                ],
             ),
             QueryLanguageGrammarRuleIdentifier::CLOSE_BRACKET => new ConcParser(
                 [
                     QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
                     new StringParser(')'),
-                ]
+                ],
             ),
 
             QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE => new RegexParser('#^[ \t]*#'),
@@ -172,7 +157,7 @@ final class QueryLanguageGrammarFactory
                     QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
                     new StringParser(','),
                     QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-                ]
+                ],
             ),
         ];
 
@@ -187,7 +172,7 @@ final class QueryLanguageGrammarFactory
 
         return new Grammar(
             QueryLanguageGrammarRuleIdentifier::QUERY,
-            array_merge($basicParsers, ...$fieldParsers)
+            array_merge($basicParsers, ...$fieldParsers),
         );
     }
 
@@ -202,7 +187,7 @@ final class QueryLanguageGrammarFactory
                 QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
                 new StringParser($operator),
                 QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-            ]
+            ],
         );
     }
 

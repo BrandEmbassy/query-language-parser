@@ -10,7 +10,10 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use function assert;
 
-final class NotInQueryLanguageOperator implements QueryLanguageOperator
+/**
+ * @final
+ */
+class NotInQueryLanguageOperator implements QueryLanguageOperator
 {
     private const OPERATOR_IDENTIFIER = 'operator.notIn';
 
@@ -46,9 +49,7 @@ final class NotInQueryLanguageOperator implements QueryLanguageOperator
                 self::OPERATOR_IDENTIFIER,
                 $field->getMultipleValuesParserIdentifier(),
             ],
-            static function ($identifier, $operator, array $values) use ($field) {
-                return $field->createNotInOperatorOutput($identifier, $values);
-            }
+            static fn($identifier, $operator, array $values) => $field->createNotInOperatorOutput($identifier, $values),
         );
     }
 }

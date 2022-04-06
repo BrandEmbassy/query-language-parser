@@ -8,7 +8,7 @@
         }
     },
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "beberlei/assert": "^3.3",
         "ferno/loco": "dev-main",
         "nette/utils": "^3.2",

@@ -5,7 +5,10 @@ namespace BrandEmbassy\QueryLanguageParser;
 use Exception;
 use Throwable;
 
-final class UnableToParseQueryException extends Exception
+/**
+ * @final
+ */
+class UnableToParseQueryException extends Exception
 {
     public static function byOtherException(Throwable $e): self
     {

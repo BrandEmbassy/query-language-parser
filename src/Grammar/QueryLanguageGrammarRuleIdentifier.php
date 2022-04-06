@@ -4,7 +4,10 @@ namespace BrandEmbassy\QueryLanguageParser\Grammar;
 
 use Nette\StaticClass;
 
-final class QueryLanguageGrammarRuleIdentifier
+/**
+ * @final
+ */
+class QueryLanguageGrammarRuleIdentifier
 {
     use StaticClass;
 

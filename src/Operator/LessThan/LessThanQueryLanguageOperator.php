@@ -10,7 +10,10 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use function assert;
 
-final class LessThanQueryLanguageOperator implements QueryLanguageOperator
+/**
+ * @final
+ */
+class LessThanQueryLanguageOperator implements QueryLanguageOperator
 {
     private const OPERATOR_IDENTIFIER = 'operator.lessThan';
 
@@ -46,9 +49,7 @@ final class LessThanQueryLanguageOperator implements QueryLanguageOperator
                 self::OPERATOR_IDENTIFIER,
                 $field->getSingleValueParserIdentifier(),
             ],
-            static function ($identifier, $operator, $value) use ($field) {
-                return $field->createLessThanOperatorOutput($identifier, $value);
-            }
+            static fn($identifier, $operator, $value) => $field->createLessThanOperatorOutput($identifier, $value),
         );
     }
 }

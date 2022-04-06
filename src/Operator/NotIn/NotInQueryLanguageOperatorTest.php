@@ -9,7 +9,10 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use function assert;
 
-final class NotInQueryLanguageOperatorTest extends TestCase
+/**
+ * @final
+ */
+class NotInQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider

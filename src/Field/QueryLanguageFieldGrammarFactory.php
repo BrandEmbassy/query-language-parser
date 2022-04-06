@@ -11,7 +11,10 @@ use Ferno\Loco\MonoParser;
 use function array_keys;
 use function array_merge;
 
-final class QueryLanguageFieldGrammarFactory
+/**
+ * @final
+ */
+class QueryLanguageFieldGrammarFactory
 {
     /**
      * @param QueryLanguageOperator[] $operators

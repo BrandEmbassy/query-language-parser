@@ -6,7 +6,10 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use Nette\StaticClass;
 
-final class NumericIdParserCreator
+/**
+ * @final
+ */
+class NumericIdParserCreator
 {
     use StaticClass;
 

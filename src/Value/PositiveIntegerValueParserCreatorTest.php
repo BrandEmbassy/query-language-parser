@@ -6,7 +6,10 @@ use Ferno\Loco\ParseFailureException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-final class PositiveIntegerValueParserCreatorTest extends TestCase
+/**
+ * @final
+ */
+class PositiveIntegerValueParserCreatorTest extends TestCase
 {
     /**
      * @dataProvider validPositiveIntegerValueProvider

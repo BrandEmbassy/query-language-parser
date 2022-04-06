@@ -8,7 +8,10 @@ use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarConfiguration;
 use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarFactory;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
 
-final class QueryParserFactory
+/**
+ * @final
+ */
+class QueryParserFactory
 {
     /**
      * @param array<int, QueryLanguageField> $availableFields
@@ -23,7 +26,7 @@ final class QueryParserFactory
 
         $grammarFactory = new QueryLanguageGrammarFactory(
             new QueryLanguageFieldGrammarFactory(),
-            $logicalOperatorOutputFactory
+            $logicalOperatorOutputFactory,
         );
 
         return new QueryParser($configuration, $grammarFactory);
