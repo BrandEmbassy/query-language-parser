@@ -14,7 +14,7 @@ class StringValueParserCreator
 {
     use StaticClass;
 
-    private const STRING_VALUE_PARSER = '/^[\-\w<>@.!:]+/';
+    private const STRING_VALUE_PARSER = '/^[^\s,()]+/';
 
 
     /**
