@@ -2,7 +2,6 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Operator\NotIn;
 
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingMultipleValuesOperator;
 
 interface QueryLanguageFieldSupportingNotInOperator extends QueryLanguageFieldSupportingMultipleValuesOperator
@@ -10,6 +9,8 @@ interface QueryLanguageFieldSupportingNotInOperator extends QueryLanguageFieldSu
     /**
      * @param mixed $fieldName output of field name parser
      * @param array<int, mixed> $values    output of multiple values parser
+     *
+     * @return mixed
      */
-    public function createNotInOperatorOutput($fieldName, array $values): CarFilter;
+    public function createNotInOperatorOutput($fieldName, array $values);
 }
