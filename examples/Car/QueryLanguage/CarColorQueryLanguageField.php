@@ -3,14 +3,17 @@
 namespace BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarColorFilter;
+use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarColorLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\EqualTo\QueryLanguageFieldSupportingEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\In\QueryLanguageFieldSupportingInOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\IsNotNull\QueryLanguageFieldSupportingIsNotNullOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\IsNull\QueryLanguageFieldSupportingIsNullOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\Like\QueryLanguageFieldSupportingLikeOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSupportingNotEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\StringValueParserCreator;
 use Ferno\Loco\GrammarException;
@@ -20,6 +23,8 @@ use Ferno\Loco\StringParser;
 final class CarColorQueryLanguageField
     implements QueryLanguageFieldSupportingEqualToOperator,
     QueryLanguageFieldSupportingNotEqualToOperator,
+    QueryLanguageFieldSupportingLikeOperator,
+    QueryLanguageFieldSupportingNotLikeOperator,
     QueryLanguageFieldSupportingInOperator,
     QueryLanguageFieldSupportingNotInOperator,
     QueryLanguageFieldSupportingIsNullOperator,
@@ -77,37 +82,49 @@ final class CarColorQueryLanguageField
     }
 
 
-    public function createEqualToOperatorOutput($fieldName, $value)
+    public function createEqualToOperatorOutput($fieldName, $value): CarColorFilter
     {
         return new CarColorFilter([$value]);
     }
 
 
-    public function createNotEqualToOperatorOutput($fieldName, $value)
+    public function createNotEqualToOperatorOutput($fieldName, $value): NotFilter
     {
         return new NotFilter(new CarColorFilter([$value]));
     }
 
 
-    public function createInOperatorOutput($fieldName, array $values)
+    public function createLikeOperatorOutput($fieldName, $value): CarColorLikeFilter
+    {
+        return new CarColorLikeFilter($value);
+    }
+
+
+    public function createNotLikeOperatorOutput($fieldName, $value): NotFilter
+    {
+        return new NotFilter(new CarColorLikeFilter($value));
+    }
+
+
+    public function createInOperatorOutput($fieldName, array $values): CarColorFilter
     {
         return new CarColorFilter($values);
     }
 
 
-    public function createNotInOperatorOutput($fieldName, array $values)
+    public function createNotInOperatorOutput($fieldName, array $values): NotFilter
     {
         return new NotFilter(new CarColorFilter($values));
     }
 
 
-    public function createIsNullOperatorOutput($fieldName)
+    public function createIsNullOperatorOutput($fieldName): NotFilter
     {
         return new NotFilter(new CarHasColorFilter());
     }
 
 
-    public function createIsNotNullOperatorOutput($fieldName)
+    public function createIsNotNullOperatorOutput($fieldName): CarHasColorFilter
     {
         return new CarHasColorFilter();
     }

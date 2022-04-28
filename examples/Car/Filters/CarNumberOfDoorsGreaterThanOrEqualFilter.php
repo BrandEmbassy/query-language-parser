@@ -6,10 +6,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Car;
 
 final class CarNumberOfDoorsGreaterThanOrEqualFilter implements CarFilter
 {
-    /**
-     * @var int
-     */
-    private $numberOfDoors;
+    private int $numberOfDoors;
 
 
     public function __construct(int $numberOfDoors)

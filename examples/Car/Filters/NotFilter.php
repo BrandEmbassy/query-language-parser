@@ -6,10 +6,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Car;
 
 final class NotFilter implements CarFilter
 {
-    /**
-     * @var CarFilter
-     */
-    private $subFilter;
+    private CarFilter $subFilter;
 
 
     public function __construct(CarFilter $subFilter)

@@ -10,7 +10,7 @@ final class CarBrandFilter implements CarFilter
     /**
      * @var string[]
      */
-    private $brands;
+    private array $brands;
 
 
     /**

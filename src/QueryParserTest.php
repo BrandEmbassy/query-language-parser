@@ -4,7 +4,9 @@ namespace BrandEmbassy\QueryLanguageParser;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\AndFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandFilter;
+use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarColorFilter;
+use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarColorLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
@@ -59,7 +61,7 @@ class QueryParserTest extends TestCase
                 'query' => '   brand  =       bmw ',
             ],
 
-            'and' => [
+            'AND' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -69,7 +71,7 @@ class QueryParserTest extends TestCase
                 'query' => 'brand=bmw AND color=yellow',
             ],
 
-            'multiple and' => [
+            'multiple AND' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -87,7 +89,7 @@ class QueryParserTest extends TestCase
                 'query' => 'brand=bmw AND color=yellow AND brand!=audi',
             ],
 
-            'or' => [
+            'OR' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof OrFilter);
 
@@ -97,7 +99,7 @@ class QueryParserTest extends TestCase
                 'query' => 'brand=bmw OR color=yellow',
             ],
 
-            'multiple or' => [
+            'multiple OR' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof OrFilter);
 
@@ -115,7 +117,7 @@ class QueryParserTest extends TestCase
                 'query' => 'brand=bmw OR color=yellow OR brand!=audi',
             ],
 
-            'and and or' => [
+            'AND and OR' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -169,7 +171,7 @@ class QueryParserTest extends TestCase
                 'query' => '  ( brand=  bmw AND  color=yellow )  OR  (  brand=audi  AND color=black ) ',
             ],
 
-            'not sub expression' => [
+            'NOT sub expression' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof NotFilter);
                     $this->assertCarBrandFilter(['bmw'], $filter->getSubFilter());
@@ -177,7 +179,7 @@ class QueryParserTest extends TestCase
                 'query' => 'NOT (brand=bmw)',
             ],
 
-            'not sub expression #2' => [
+            'NOT sub expression #2' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof OrFilter);
 
@@ -199,7 +201,7 @@ class QueryParserTest extends TestCase
                 'query' => '  NOT  ( brand= bmw AND  color=yellow) OR  (  brand=audi  AND color=black ) ',
             ],
 
-            'in and and' => [
+            'IN and AND' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -209,7 +211,7 @@ class QueryParserTest extends TestCase
                 'query' => 'brand IN (bmw, audi) AND color=yellow',
             ],
 
-            'is null and and #1' => [
+            'IS NULL and AND #1' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -222,7 +224,7 @@ class QueryParserTest extends TestCase
                 'query' => 'brand IN (bmw, audi) AND color IS NULL',
             ],
 
-            'is not null and and' => [
+            'IS NOT NULL and AND' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -232,7 +234,7 @@ class QueryParserTest extends TestCase
                 'query' => 'color IS NOT NULL AND brand IN (bmw, audi)',
             ],
 
-            'is not null and and #2' => [
+            'IS NOT NULL and AND #2' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
 
@@ -240,6 +242,22 @@ class QueryParserTest extends TestCase
                     $this->assertCarBrandFilter(['bmw', 'audi'], $filter->getRightFilter());
                 },
                 'query' => '  color     IS  NOT      NULL    AND   brand  IN    (       bmw ,         audi)     ',
+            ],
+
+            'LIKE and AND and NOT LIKE' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    assert($filter instanceof AndFilter);
+
+                    $leftFilter = $filter->getLeftFilter();
+                    assert($leftFilter instanceof CarColorLikeFilter);
+
+                    $rightFilter = $filter->getRightFilter();
+                    assert($rightFilter instanceof NotFilter);
+
+                    $this->assertCarColorLikeFilter('ello', $leftFilter);
+                    $this->assertCarBrandLikeFilter('mw', $rightFilter->getSubFilter());
+                },
+                'query' => '  color      ~   ello    AND   brand  !~    mw      ',
             ],
         ];
     }
@@ -272,6 +290,8 @@ class QueryParserTest extends TestCase
             /* ********** OPERATORS ********** */
             ['query' => 'brand = bmw'],
             ['query' => 'brand != bmw'],
+            ['query' => 'brand ~ bmw'],
+            ['query' => 'brand !~ bmw'],
             ['query' => 'brand IN (bmw, audi)'],
             ['query' => 'brand NOT IN (bmw, audi)'],
             ['query' => 'color IS NULL'],
@@ -307,6 +327,20 @@ class QueryParserTest extends TestCase
     {
         assert($filter instanceof CarColorFilter);
         Assert::assertSame($expectedColors, $filter->getColors());
+    }
+
+
+    private function assertCarBrandLikeFilter(string $expectedBrand, ?CarFilter $filter): void
+    {
+        assert($filter instanceof CarBrandLikeFilter);
+        Assert::assertSame($expectedBrand, $filter->getBrand());
+    }
+
+
+    private function assertCarColorLikeFilter(string $expectedBrand, ?CarFilter $filter): void
+    {
+        assert($filter instanceof CarColorLikeFilter);
+        Assert::assertSame($expectedBrand, $filter->getColor());
     }
 
 

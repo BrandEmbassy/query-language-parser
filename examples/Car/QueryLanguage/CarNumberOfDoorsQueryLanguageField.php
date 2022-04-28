@@ -17,7 +17,6 @@ use BrandEmbassy\QueryLanguageParser\Operator\LessThanOrEqualTo\QueryLanguageFie
 use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSupportingNotEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
-use BrandEmbassy\QueryLanguageParser\Value\NumericValueParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\PositiveIntegerValueParserCreator;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
@@ -85,25 +84,25 @@ final class CarNumberOfDoorsQueryLanguageField
     }
 
 
-    public function createEqualToOperatorOutput($fieldName, $value)
+    public function createEqualToOperatorOutput($fieldName, $value): CarNumberOfDoorsFilter
     {
         return new CarNumberOfDoorsFilter([$value]);
     }
 
 
-    public function createNotEqualToOperatorOutput($fieldName, $value)
+    public function createNotEqualToOperatorOutput($fieldName, $value): NotFilter
     {
         return new NotFilter(new CarNumberOfDoorsFilter([$value]));
     }
 
 
-    public function createInOperatorOutput($fieldName, array $values)
+    public function createInOperatorOutput($fieldName, array $values): CarNumberOfDoorsFilter
     {
         return new CarNumberOfDoorsFilter($values);
     }
 
 
-    public function createNotInOperatorOutput($fieldName, array $values)
+    public function createNotInOperatorOutput($fieldName, array $values): NotFilter
     {
         return new NotFilter(new CarNumberOfDoorsFilter($values));
     }
@@ -112,7 +111,7 @@ final class CarNumberOfDoorsQueryLanguageField
     /**
      * @inheritDoc
      */
-    public function createGreaterThanOperatorOutput($fieldName, $value)
+    public function createGreaterThanOperatorOutput($fieldName, $value): CarNumberOfDoorsGreaterThanFilter
     {
         return new CarNumberOfDoorsGreaterThanFilter($value);
     }
@@ -121,7 +120,7 @@ final class CarNumberOfDoorsQueryLanguageField
     /**
      * @inheritDoc
      */
-    public function createGreaterThanOrEqualToOperatorOutput($fieldName, $value)
+    public function createGreaterThanOrEqualToOperatorOutput($fieldName, $value): CarNumberOfDoorsGreaterThanOrEqualFilter
     {
         return new CarNumberOfDoorsGreaterThanOrEqualFilter($value);
     }
@@ -130,7 +129,7 @@ final class CarNumberOfDoorsQueryLanguageField
     /**
      * @inheritDoc
      */
-    public function createLessThanOperatorOutput($fieldName, $value)
+    public function createLessThanOperatorOutput($fieldName, $value): CarNumberOfDoorsLessThanFilter
     {
         return new CarNumberOfDoorsLessThanFilter($value);
     }
@@ -139,7 +138,7 @@ final class CarNumberOfDoorsQueryLanguageField
     /**
      * @inheritDoc
      */
-    public function createLessThanOrEqualToOperatorOutput($fieldName, $value)
+    public function createLessThanOrEqualToOperatorOutput($fieldName, $value): CarNumberOfDoorsLessThanOrEqualFilter
     {
         return new CarNumberOfDoorsLessThanOrEqualFilter($value);
     }
