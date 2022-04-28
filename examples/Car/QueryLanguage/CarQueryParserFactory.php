@@ -13,8 +13,10 @@ use BrandEmbassy\QueryLanguageParser\Operator\IsNotNull\IsNotNullQueryLanguageOp
 use BrandEmbassy\QueryLanguageParser\Operator\IsNull\IsNullQueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\LessThan\LessThanQueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\LessThanOrEqualTo\LessThanOrEqualToQueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\Like\LikeQueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\NotEqualToQueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\NotInQueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\NotLike\NotLikeQueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\QueryParser;
 
 final class CarQueryParserFactory
@@ -30,6 +32,8 @@ final class CarQueryParserFactory
             [
                 new EqualToQueryLanguageOperator(),
                 new NotEqualToQueryLanguageOperator(),
+                new LikeQueryLanguageOperator(),
+                new NotLikeQueryLanguageOperator(),
                 new InQueryLanguageOperator(),
                 new NotInQueryLanguageOperator(),
                 new IsNullQueryLanguageOperator(),

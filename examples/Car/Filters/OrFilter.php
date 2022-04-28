@@ -6,15 +6,9 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Car;
 
 final class OrFilter implements CarFilter
 {
-    /**
-     * @var CarFilter
-     */
-    private $leftFilter;
+    private CarFilter $leftFilter;
 
-    /**
-     * @var CarFilter
-     */
-    private $rightFilter;
+    private CarFilter $rightFilter;
 
 
     public function __construct(CarFilter $leftFilter, CarFilter $rightFilter)

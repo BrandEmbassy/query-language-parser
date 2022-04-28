@@ -10,7 +10,7 @@ final class CarColorFilter implements CarFilter
     /**
      * @var string[]
      */
-    private $colors;
+    private array $colors;
 
 
     public function __construct(array $colors)

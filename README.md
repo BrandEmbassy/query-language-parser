@@ -42,7 +42,7 @@ You can also adjust operators priority by adding brackets like this:
 
 ### Relation operators
 
-The most common relation operators are already part of the library. You can use operators `=`, `!=`, `<`, `<=`, `>`, `>=`, `IN`, `NOT IN`, `IS NULL` and `IS NOT NULL` without any special effort.
+The most common relation operators are already part of the library. You can use operators `=`, `!=`, `~`, `!~`, `<`, `<=`, `>`, `>=`, `IN`, `NOT IN`, `IS NULL` and `IS NOT NULL` without any special effort.
 
 #### Custom operators
 

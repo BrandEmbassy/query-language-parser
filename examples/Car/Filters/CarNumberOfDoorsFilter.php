@@ -10,7 +10,7 @@ final class CarNumberOfDoorsFilter implements CarFilter
     /**
      * @var int[]
      */
-    private $numberOfDoors;
+    private array $numberOfDoors;
 
 
     /**
