@@ -2,7 +2,6 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Operator\Like;
 
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
 
 interface QueryLanguageFieldSupportingLikeOperator extends QueryLanguageFieldSupportingSingleValueOperator
@@ -10,6 +9,8 @@ interface QueryLanguageFieldSupportingLikeOperator extends QueryLanguageFieldSup
     /**
      * @param mixed $fieldName output of field name parser
      * @param mixed $value     output of single value parser
+     *
+     * @return mixed
      */
-    public function createLikeOperatorOutput($fieldName, $value): CarFilter;
+    public function createLikeOperatorOutput($fieldName, $value);
 }

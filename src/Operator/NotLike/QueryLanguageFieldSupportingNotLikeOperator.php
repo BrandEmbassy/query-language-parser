@@ -2,7 +2,6 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Operator\NotLike;
 
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
 
 interface QueryLanguageFieldSupportingNotLikeOperator extends QueryLanguageFieldSupportingSingleValueOperator
@@ -10,6 +9,8 @@ interface QueryLanguageFieldSupportingNotLikeOperator extends QueryLanguageField
     /**
      * @param mixed $fieldName output of field name parser
      * @param mixed $value     output of single value parser
+     *
+     * @return mixed
      */
-    public function createNotLikeOperatorOutput($fieldName, $value): CarFilter;
+    public function createNotLikeOperatorOutput($fieldName, $value);
 }

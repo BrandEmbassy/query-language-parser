@@ -2,7 +2,6 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Operator\EqualTo;
 
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
 
 interface QueryLanguageFieldSupportingEqualToOperator extends QueryLanguageFieldSupportingSingleValueOperator
@@ -10,6 +9,8 @@ interface QueryLanguageFieldSupportingEqualToOperator extends QueryLanguageField
     /**
      * @param mixed $fieldName output of field name parser
      * @param mixed $value     output of single value parser
+     *
+     * @return mixed
      */
-    public function createEqualToOperatorOutput($fieldName, $value): CarFilter;
+    public function createEqualToOperatorOutput($fieldName, $value);
 }

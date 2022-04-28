@@ -2,7 +2,6 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Operator\In;
 
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingMultipleValuesOperator;
 
 interface QueryLanguageFieldSupportingInOperator extends QueryLanguageFieldSupportingMultipleValuesOperator
@@ -10,6 +9,8 @@ interface QueryLanguageFieldSupportingInOperator extends QueryLanguageFieldSuppo
     /**
      * @param mixed $fieldName output of field name parser
      * @param array<int, mixed> $values    output of multiple values parser
+     *
+     * @return mixed
      */
-    public function createInOperatorOutput($fieldName, array $values): CarFilter;
+    public function createInOperatorOutput($fieldName, array $values);
 }

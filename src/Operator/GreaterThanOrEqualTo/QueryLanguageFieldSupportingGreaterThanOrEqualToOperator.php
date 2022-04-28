@@ -2,7 +2,6 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Operator\GreaterThanOrEqualTo;
 
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
 
 interface QueryLanguageFieldSupportingGreaterThanOrEqualToOperator extends QueryLanguageFieldSupportingSingleValueOperator
@@ -10,6 +9,8 @@ interface QueryLanguageFieldSupportingGreaterThanOrEqualToOperator extends Query
     /**
      * @param mixed $fieldName output of field name parser
      * @param mixed $value     output of single value parser
+     *
+     * @return mixed
      */
-    public function createGreaterThanOrEqualToOperatorOutput($fieldName, $value): CarFilter;
+    public function createGreaterThanOrEqualToOperatorOutput($fieldName, $value);
 }
