@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace BrandEmbassy\QueryLanguageParser\Operator\Like;
+namespace BrandEmbassy\QueryLanguageParser\Operator\NotLike;
 
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
@@ -13,9 +13,9 @@ use function assert;
 /**
  * @final
  */
-class LikeQueryLanguageOperator implements QueryLanguageOperator
+class NotLikeSymbolQueryLanguageOperator implements QueryLanguageOperator
 {
-    private const OPERATOR_IDENTIFIER = 'operator.like';
+    private const OPERATOR_IDENTIFIER = 'operator.notLikeSymbol';
 
 
     public function getOperatorIdentifier(): string
@@ -29,19 +29,19 @@ class LikeQueryLanguageOperator implements QueryLanguageOperator
      */
     public function createOperatorParser(): MonoParser
     {
-        return QueryLanguageOperatorParserCreator::createSignOperatorParser('LIKE');
+        return QueryLanguageOperatorParserCreator::createSignOperatorParser('!~');
     }
 
 
     public function isFieldSupported(QueryLanguageField $field): bool
     {
-        return $field instanceof QueryLanguageFieldSupportingLikeOperator;
+        return $field instanceof QueryLanguageFieldSupportingNotLikeSymbolOperator;
     }
 
 
     public function createFieldExpressionParser(QueryLanguageField $field): MonoParser
     {
-        assert($field instanceof QueryLanguageFieldSupportingLikeOperator);
+        assert($field instanceof QueryLanguageFieldSupportingNotLikeSymbolOperator);
 
         return new ConcParser(
             [
@@ -49,7 +49,7 @@ class LikeQueryLanguageOperator implements QueryLanguageOperator
                 self::OPERATOR_IDENTIFIER,
                 $field->getSingleValueParserIdentifier(),
             ],
-            static fn($identifier, $operator, $value) => $field->createLikeOperatorOutput($identifier, $value),
+            static fn($identifier, $operator, $value) => $field->createNotLikeSymbolOperatorOutput($identifier, $value),
         );
     }
 }

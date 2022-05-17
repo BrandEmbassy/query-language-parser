@@ -1,9 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace BrandEmbassy\QueryLanguageParser\Operator\NotLike;
+namespace BrandEmbassy\QueryLanguageParser\Operator\Like;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandLikeFilter;
-use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +11,7 @@ use function assert;
 /**
  * @final
  */
-class NotLikeQueryLanguageOperatorTest extends TestCase
+class LikeSymbolQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider
@@ -23,11 +22,8 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
 
         $result = $parser->parse($query);
 
-        assert($result instanceof NotFilter);
-
-        $subFilter = $result->getSubFilter();
-        assert($subFilter instanceof CarBrandLikeFilter);
-        Assert::assertSame('bmw', $subFilter->getBrand());
+        assert($result instanceof CarBrandLikeFilter);
+        Assert::assertSame('bmw', $result->getBrand());
     }
 
 
@@ -37,11 +33,11 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
     public function queryToBeParsedProvider(): array
     {
         return [
-            ['query' => 'brand NOT LIKE bmw'],
-            ['query' => 'brandNOT LIKEbmw'],
-            ['query' => 'brand NOT LIKEbmw'],
-            ['query' => 'brandNOT LIKE bmw'],
-            ['query' => '  brand     NOT LIKE          bmw    '],
+            ['query' => 'brand ~ bmw'],
+            ['query' => 'brand~bmw'],
+            ['query' => 'brand ~bmw'],
+            ['query' => 'brand~ bmw'],
+            ['query' => '  brand     ~          bmw    '],
         ];
     }
 }

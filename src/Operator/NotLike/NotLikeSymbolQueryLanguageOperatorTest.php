@@ -12,7 +12,7 @@ use function assert;
 /**
  * @final
  */
-class NotLikeQueryLanguageOperatorTest extends TestCase
+class NotLikeSymbolQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider
@@ -37,11 +37,11 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
     public function queryToBeParsedProvider(): array
     {
         return [
-            ['query' => 'brand NOT LIKE bmw'],
-            ['query' => 'brandNOT LIKEbmw'],
-            ['query' => 'brand NOT LIKEbmw'],
-            ['query' => 'brandNOT LIKE bmw'],
-            ['query' => '  brand     NOT LIKE          bmw    '],
+            ['query' => 'brand !~ bmw'],
+            ['query' => 'brand!~bmw'],
+            ['query' => 'brand !~bmw'],
+            ['query' => 'brand!~ bmw'],
+            ['query' => '  brand     !~          bmw    '],
         ];
     }
 }

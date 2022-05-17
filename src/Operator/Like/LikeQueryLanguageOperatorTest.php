@@ -33,11 +33,11 @@ class LikeQueryLanguageOperatorTest extends TestCase
     public function queryToBeParsedProvider(): array
     {
         return [
-            ['query' => 'brand ~ bmw'],
-            ['query' => 'brand~bmw'],
-            ['query' => 'brand ~bmw'],
-            ['query' => 'brand~ bmw'],
-            ['query' => '  brand     ~          bmw    '],
+            ['query' => 'brand LIKE bmw'],
+            ['query' => 'brandLIKEbmw'],
+            ['query' => 'brand LIKEbmw'],
+            ['query' => 'brandLIKE bmw'],
+            ['query' => '  brand     LIKE          bmw    '],
         ];
     }
 }
