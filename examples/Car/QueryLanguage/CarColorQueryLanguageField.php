@@ -11,9 +11,11 @@ use BrandEmbassy\QueryLanguageParser\Operator\In\QueryLanguageFieldSupportingInO
 use BrandEmbassy\QueryLanguageParser\Operator\IsNotNull\QueryLanguageFieldSupportingIsNotNullOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\IsNull\QueryLanguageFieldSupportingIsNullOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\Like\QueryLanguageFieldSupportingLikeOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\Like\QueryLanguageFieldSupportingLikeSymbolOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSupportingNotEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeSymbolOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\StringValueParserCreator;
 use Ferno\Loco\GrammarException;
@@ -25,6 +27,8 @@ final class CarColorQueryLanguageField
     QueryLanguageFieldSupportingNotEqualToOperator,
     QueryLanguageFieldSupportingLikeOperator,
     QueryLanguageFieldSupportingNotLikeOperator,
+    QueryLanguageFieldSupportingLikeSymbolOperator,
+    QueryLanguageFieldSupportingNotLikeSymbolOperator,
     QueryLanguageFieldSupportingInOperator,
     QueryLanguageFieldSupportingNotInOperator,
     QueryLanguageFieldSupportingIsNullOperator,
@@ -103,6 +107,18 @@ final class CarColorQueryLanguageField
     public function createNotLikeOperatorOutput($fieldName, $value): NotFilter
     {
         return new NotFilter(new CarColorLikeFilter($value));
+    }
+
+
+    public function createLikeSymbolOperatorOutput($fieldName, $value)
+    {
+        return $this->createLikeOperatorOutput($fieldName, $value);
+    }
+
+
+    public function createNotLikeSymbolOperatorOutput($fieldName, $value)
+    {
+        return $this->createNotLikeOperatorOutput($fieldName, $value);
     }
 
 
