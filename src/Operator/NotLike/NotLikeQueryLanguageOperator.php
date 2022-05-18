@@ -29,7 +29,7 @@ class NotLikeQueryLanguageOperator implements QueryLanguageOperator
      */
     public function createOperatorParser(): MonoParser
     {
-        return QueryLanguageOperatorParserCreator::createSignOperatorParser('NOT LIKE');
+        return QueryLanguageOperatorParserCreator::createWordOperatorParser('NOT LIKE');
     }
 
 
