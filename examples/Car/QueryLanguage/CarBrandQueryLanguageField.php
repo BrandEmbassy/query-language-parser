@@ -8,9 +8,11 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Operator\EqualTo\QueryLanguageFieldSupportingEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\In\QueryLanguageFieldSupportingInOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\Like\QueryLanguageFieldSupportingLikeOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\Like\QueryLanguageFieldSupportingLikeSymbolOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSupportingNotEqualToOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeOperator;
+use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeSymbolOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\StringValueParserCreator;
 use Ferno\Loco\GrammarException;
@@ -22,6 +24,8 @@ final class CarBrandQueryLanguageField
     QueryLanguageFieldSupportingNotEqualToOperator,
     QueryLanguageFieldSupportingLikeOperator,
     QueryLanguageFieldSupportingNotLikeOperator,
+    QueryLanguageFieldSupportingLikeSymbolOperator,
+    QueryLanguageFieldSupportingNotLikeSymbolOperator,
     QueryLanguageFieldSupportingInOperator,
     QueryLanguageFieldSupportingNotInOperator
 {
@@ -98,6 +102,18 @@ final class CarBrandQueryLanguageField
     public function createNotLikeOperatorOutput($fieldName, $value): NotFilter
     {
         return new NotFilter(new CarBrandLikeFilter($value));
+    }
+
+
+    public function createLikeSymbolOperatorOutput($fieldName, $value)
+    {
+        return $this->createLikeOperatorOutput($fieldName, $value);
+    }
+
+
+    public function createNotLikeSymbolOperatorOutput($fieldName, $value)
+    {
+        return $this->createNotLikeOperatorOutput($fieldName, $value);
     }
 
 

@@ -257,6 +257,22 @@ class QueryParserTest extends TestCase
                     $this->assertCarColorLikeFilter('ello', $leftFilter);
                     $this->assertCarBrandLikeFilter('mw', $rightFilter->getSubFilter());
                 },
+                'query' => '  color   LIKE   ello    AND   brand  NOT LIKE    mw      ',
+            ],
+
+            'LIKE symbol and AND and NOT LIKE symbol' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    assert($filter instanceof AndFilter);
+
+                    $leftFilter = $filter->getLeftFilter();
+                    assert($leftFilter instanceof CarColorLikeFilter);
+
+                    $rightFilter = $filter->getRightFilter();
+                    assert($rightFilter instanceof NotFilter);
+
+                    $this->assertCarColorLikeFilter('ello', $leftFilter);
+                    $this->assertCarBrandLikeFilter('mw', $rightFilter->getSubFilter());
+                },
                 'query' => '  color      ~   ello    AND   brand  !~    mw      ',
             ],
         ];
@@ -292,6 +308,8 @@ class QueryParserTest extends TestCase
             ['query' => 'brand != bmw'],
             ['query' => 'brand ~ bmw'],
             ['query' => 'brand !~ bmw'],
+            ['query' => 'brand LIKE bmw'],
+            ['query' => 'brand NOT LIKE bmw'],
             ['query' => 'brand IN (bmw, audi)'],
             ['query' => 'brand NOT IN (bmw, audi)'],
             ['query' => 'color IS NULL'],
