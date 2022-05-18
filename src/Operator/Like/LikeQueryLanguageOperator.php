@@ -29,7 +29,7 @@ class LikeQueryLanguageOperator implements QueryLanguageOperator
      */
     public function createOperatorParser(): MonoParser
     {
-        return QueryLanguageOperatorParserCreator::createSignOperatorParser('LIKE');
+        return QueryLanguageOperatorParserCreator::createWordOperatorParser('LIKE');
     }
 
 
