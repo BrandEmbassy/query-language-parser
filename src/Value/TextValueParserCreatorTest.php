@@ -104,13 +104,13 @@ class TextValueParserCreatorTest extends TestCase
     public function validTextValueWithCustomPatternsProvider(): array
     {
         return [
-            [
+            'only numbers inside value' => [
                 'expectedParsedResult' => '123',
                 'valueToParse' => '"123"',
                 'patternForQuotedText' => '[123]+',
                 'patternForSingleQuotedText' => '[123]+',
             ],
-            [
+            'only limited characters inside value' => [
                 'expectedParsedResult' => 'ccabb',
                 'valueToParse' => '\'ccabb\'',
                 'patternForQuotedText' => '[abc]+',
