@@ -6,7 +6,7 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
-use function str_replace;
+use function substr;
 
 /**
  * @final
@@ -25,7 +25,7 @@ class TextValueParserCreator
     {
         return new RegexParser(
             self::TEXT_VALUE_PARSER,
-            static fn($value): string => str_replace(['"', '\''], '', (string)$value),
+            static fn($value): string => substr((string)$value, 1, -1),
         );
     }
 }

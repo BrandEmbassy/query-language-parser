@@ -42,6 +42,14 @@ class TextValueParserCreatorTest extends TestCase
                 'expectedParsedResult' => '1234',
                 'valueToParse' => '"1234"',
             ],
+            [
+                'expectedParsedResult' => "12'34",
+                'valueToParse' => '"12\'34"',
+            ],
+            [
+                'expectedParsedResult' => 'foo"bar',
+                'valueToParse' => '\'foo"bar\'',
+            ],
         ];
     }
 
