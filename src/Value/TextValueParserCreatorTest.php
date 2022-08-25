@@ -79,4 +79,43 @@ class TextValueParserCreatorTest extends TestCase
             ['valueToParse' => '"foo bar\''],
         ];
     }
+
+
+    /**
+     * @dataProvider validTextValueWithCustomPatternsProvider
+     */
+    public function testParsingWithCustomPatterns(
+        string $expectedParsedResult,
+        string $valueToParse,
+        string $patternForQuotedText,
+        string $patternForSingleQuotedText
+    ): void {
+        $parser = TextValueParserCreator::createWithCustomPattern($patternForQuotedText, $patternForSingleQuotedText);
+
+        $actualValue = $parser->parse($valueToParse);
+
+        Assert::assertSame($expectedParsedResult, $actualValue);
+    }
+
+
+    /**
+     * @return string[][]
+     */
+    public function validTextValueWithCustomPatternsProvider(): array
+    {
+        return [
+            [
+                'expectedParsedResult' => '123',
+                'valueToParse' => '"123"',
+                'patternForQuotedText' => '[123]+',
+                'patternForSingleQuotedText' => '[123]+',
+            ],
+            [
+                'expectedParsedResult' => 'ccabb',
+                'valueToParse' => '\'ccabb\'',
+                'patternForQuotedText' => '[abc]+',
+                'patternForSingleQuotedText' => '[abc]+',
+            ],
+        ];
+    }
 }

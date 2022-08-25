@@ -6,6 +6,7 @@ use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
+use function sprintf;
 use function substr;
 
 /**
@@ -15,7 +16,7 @@ class TextValueParserCreator
 {
     use StaticClass;
 
-    public const TEXT_VALUE_PARSER = '/^(["]{1}[^"]+["]{1})|([\']{1}[^\']+[\']{1})/';
+    public const TEXT_VALUE_PARSER_TEMPLATE = '/^(["]{1}%s["]{1})|([\']{1}%s[\']{1})/';
 
 
     /**
@@ -23,8 +24,17 @@ class TextValueParserCreator
      */
     public static function create(): MonoParser
     {
+        return self::createWithCustomPattern('[^"]+', '[^\']+');
+    }
+
+
+    /**
+     * @throws GrammarException
+     */
+    public static function createWithCustomPattern(string $patternForQuotedText, string $patternForSingleQuotedText): MonoParser
+    {
         return new RegexParser(
-            self::TEXT_VALUE_PARSER,
+            sprintf(self::TEXT_VALUE_PARSER_TEMPLATE, $patternForQuotedText, $patternForSingleQuotedText),
             static fn($value): string => substr((string)$value, 1, -1),
         );
     }
