@@ -42,6 +42,14 @@ class TextValueParserCreatorTest extends TestCase
                 'expectedParsedResult' => '1234',
                 'valueToParse' => '"1234"',
             ],
+            [
+                'expectedParsedResult' => "12'34",
+                'valueToParse' => '"12\'34"',
+            ],
+            [
+                'expectedParsedResult' => 'foo"bar',
+                'valueToParse' => '\'foo"bar\'',
+            ],
         ];
     }
 
@@ -69,6 +77,45 @@ class TextValueParserCreatorTest extends TestCase
             ['valueToParse' => '"foo bar'],
             ['valueToParse' => 'foo bar\''],
             ['valueToParse' => '"foo bar\''],
+        ];
+    }
+
+
+    /**
+     * @dataProvider validTextValueWithCustomPatternsProvider
+     */
+    public function testParsingWithCustomPatterns(
+        string $expectedParsedResult,
+        string $valueToParse,
+        string $patternForQuotedText,
+        string $patternForSingleQuotedText
+    ): void {
+        $parser = TextValueParserCreator::createWithCustomPattern($patternForQuotedText, $patternForSingleQuotedText);
+
+        $actualValue = $parser->parse($valueToParse);
+
+        Assert::assertSame($expectedParsedResult, $actualValue);
+    }
+
+
+    /**
+     * @return string[][]
+     */
+    public function validTextValueWithCustomPatternsProvider(): array
+    {
+        return [
+            'only numbers inside value' => [
+                'expectedParsedResult' => '123',
+                'valueToParse' => '"123"',
+                'patternForQuotedText' => '[123]+',
+                'patternForSingleQuotedText' => '[123]+',
+            ],
+            'only limited characters inside value' => [
+                'expectedParsedResult' => 'ccabb',
+                'valueToParse' => '\'ccabb\'',
+                'patternForQuotedText' => '[abc]+',
+                'patternForSingleQuotedText' => '[abc]+',
+            ],
         ];
     }
 }
