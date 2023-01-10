@@ -33,9 +33,11 @@ class QueryLanguageFieldGrammarFactory
         $operatorParsers = $this->getOperatorParsers($field, $operators);
         $parsers = array_merge($parsers, $operatorParsers);
 
-        $mainFieldParserIdentifier = $field->getFieldIdentifier();
-        $mainFieldParser = new LazyAltParser(array_keys($operatorParsers));
-        $parsers[$mainFieldParserIdentifier] = $mainFieldParser;
+        if (!$field instanceof ValueOnlyQueryLanguageField) {
+            $mainFieldParserIdentifier = $field->getFieldIdentifier();
+            $mainFieldParser = new LazyAltParser(array_keys($operatorParsers));
+            $parsers[$mainFieldParserIdentifier] = $mainFieldParser;
+        }
 
         return $parsers;
     }

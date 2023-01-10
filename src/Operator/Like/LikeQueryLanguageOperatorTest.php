@@ -60,7 +60,6 @@ class LikeQueryLanguageOperatorTest extends TestCase
         return [
             ['query' => 'brandLIKE bmw'],
             ['query' => 'brand LIKEbmw'],
-            ['query' => 'brandLIKEbmw'],
         ];
     }
 }

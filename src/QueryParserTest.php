@@ -47,6 +47,13 @@ class QueryParserTest extends TestCase
                 'query' => '',
             ],
 
+            'value only' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['BMW'], $filter);
+                },
+                'query' => 'BMW',
+            ],
+
             'basic filter' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     $this->assertCarBrandFilter(['bmw'], $filter);

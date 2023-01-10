@@ -4,8 +4,10 @@ namespace BrandEmbassy\QueryLanguageParser\Grammar;
 
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageFieldGrammarFactory;
+use BrandEmbassy\QueryLanguageParser\Field\ValueOnlyQueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\LogicalOperatorOutputFactory;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyParserCreator;
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\EmptyParser;
 use Ferno\Loco\Grammar;
@@ -16,6 +18,7 @@ use Ferno\Loco\RegexParser;
 use Ferno\Loco\StringParser;
 use function array_map;
 use function array_merge;
+use function array_unshift;
 
 /**
  * @final
@@ -44,20 +47,30 @@ class QueryLanguageGrammarFactory
      */
     public function create(array $fields, array $operators): Grammar
     {
-        $basicParsers = [
-            QueryLanguageGrammarRuleIdentifier::QUERY => new LazyAltParser(
+        $queryLazyAltParserInternals = [
+            new ConcParser(
                 [
-                    new ConcParser(
-                        [
-                            QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-                            QueryLanguageGrammarRuleIdentifier::EXPRESSION,
-                            QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-                        ],
-                        static fn($whitespace1, $output, $whitespace2) => $output,
-                    ),
-                    new EmptyParser(),
+                    QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
+                    QueryLanguageGrammarRuleIdentifier::EXPRESSION,
+                    QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
                 ],
+                static fn($whitespace1, $output, $whitespace2) => $output,
             ),
+            new EmptyParser(),
+        ];
+
+        $valueOnlyField = null;
+        foreach ($fields as $field) {
+            if ($field instanceof ValueOnlyQueryLanguageField) {
+                $valueOnlyField = $field;
+            }
+        }
+        if ($valueOnlyField !== null) {
+            array_unshift($queryLazyAltParserInternals, ValueOnlyParserCreator::create($valueOnlyField));
+        }
+
+        $basicParsers = [
+            QueryLanguageGrammarRuleIdentifier::QUERY => new LazyAltParser($queryLazyAltParserInternals),
 
             QueryLanguageGrammarRuleIdentifier::EXPRESSION => new LazyAltParser(
                 [
@@ -85,7 +98,12 @@ class QueryLanguageGrammarFactory
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                     QueryLanguageGrammarRuleIdentifier::CLOSE_BRACKET,
                 ],
-                fn($notOperator, $openBracket, $subOutput, $closeBracket) => $this->logicalOperatorOutputFactory->createNotOperatorOutput($subOutput),
+                fn(
+                    $notOperator,
+                    $openBracket,
+                    $subOutput,
+                    $closeBracket
+                ) => $this->logicalOperatorOutputFactory->createNotOperatorOutput($subOutput),
             ),
 
             QueryLanguageGrammarRuleIdentifier::AND_EXPRESSION => new ConcParser(
