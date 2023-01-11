@@ -60,9 +60,10 @@ class QueryLanguageGrammarFactory
         ];
 
         $valueOnlyField = null;
-        foreach ($fields as $field) {
+        foreach ($fields as $key => $field) {
             if ($field instanceof ValueOnlyQueryLanguageField) {
                 $valueOnlyField = $field;
+                unset($fields[$key]);
             }
         }
         if ($valueOnlyField !== null) {
