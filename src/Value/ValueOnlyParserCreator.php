@@ -2,10 +2,9 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Value;
 
-use BrandEmbassy\QueryLanguageParser\Field\ValueOnlyQueryLanguageField;
 use Ferno\Loco\GrammarException;
+use Ferno\Loco\LazyAltParser;
 use Ferno\Loco\MonoParser;
-use Ferno\Loco\RegexParser;
 use Nette\StaticClass;
 
 /**
@@ -15,17 +14,21 @@ class ValueOnlyParserCreator
 {
     use StaticClass;
 
-    private const STRING_VALUE_PARSER = '/^[^\s,()=<>~]+$/';
-
 
     /**
      * @throws GrammarException
      */
-    public static function create(ValueOnlyQueryLanguageField $field): MonoParser
+    public static function create(?callable $callback = null): MonoParser
     {
-        return new RegexParser(
-            self::STRING_VALUE_PARSER,
-            static fn(string $value) => $field->createFilter($value),
+        return new LazyAltParser(
+            [
+                TextValueParserCreator::createWithCustomPattern(
+                    '[^,()=<>~"]+',
+                    '[^,()=<>~\']+'
+                ),
+                StringValueParserCreator::create($callback),
+            ],
+            $callback,
         );
     }
 }

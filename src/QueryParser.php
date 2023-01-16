@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser;
 
 use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarConfiguration;
 use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarFactory;
+use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyFilterFactory;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\ParseFailureException;
 
@@ -31,13 +32,13 @@ class QueryParser
      *
      * @throws UnableToParseQueryException
      */
-    public function parse(string $query)
+    public function parse(string $query, ?ValueOnlyFilterFactory $valueOnlyFilterFactory = null)
     {
         $fields = $this->grammarConfiguration->getFields();
         $operators = $this->grammarConfiguration->getOperators();
 
         try {
-            $grammar = $this->grammarFactory->create($fields, $operators);
+            $grammar = $this->grammarFactory->create($fields, $operators, $valueOnlyFilterFactory);
 
             return $grammar->parse($query);
         } catch (GrammarException | ParseFailureException $e) {

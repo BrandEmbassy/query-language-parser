@@ -45,7 +45,12 @@ final class CarBrandQueryLanguageField
 
     public function createFieldNameParser(): MonoParser
     {
-        return new StringParser('brand');
+        return new LazyAltParser(
+            [
+                TextValueParserCreator::create(),
+                new StringParser('brand'),
+            ],
+        );
     }
 
 

@@ -4,9 +4,9 @@ namespace BrandEmbassy\QueryLanguageParser\Grammar;
 
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageFieldGrammarFactory;
-use BrandEmbassy\QueryLanguageParser\Field\ValueOnlyQueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\LogicalOperatorOutputFactory;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyFilterFactory;
 use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyParserCreator;
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\EmptyParser;
@@ -45,8 +45,11 @@ class QueryLanguageGrammarFactory
      *
      * @throws GrammarException
      */
-    public function create(array $fields, array $operators): Grammar
-    {
+    public function create(
+        array $fields,
+        array $operators,
+        ?ValueOnlyFilterFactory $valueOnlyFilterFactory = null
+    ): Grammar {
         $queryLazyAltParserInternals = [
             new ConcParser(
                 [
@@ -59,28 +62,12 @@ class QueryLanguageGrammarFactory
             new EmptyParser(),
         ];
 
-        $valueOnlyField = null;
-        foreach ($fields as $key => $field) {
-            if ($field instanceof ValueOnlyQueryLanguageField) {
-                $valueOnlyField = $field;
-                unset($fields[$key]);
-            }
-        }
-        if ($valueOnlyField !== null) {
-            array_unshift($queryLazyAltParserInternals, ValueOnlyParserCreator::create($valueOnlyField));
-        }
 
         $basicParsers = [
             QueryLanguageGrammarRuleIdentifier::QUERY => new LazyAltParser($queryLazyAltParserInternals),
 
             QueryLanguageGrammarRuleIdentifier::EXPRESSION => new LazyAltParser(
-                [
-                    QueryLanguageGrammarRuleIdentifier::AND_EXPRESSION,
-                    QueryLanguageGrammarRuleIdentifier::OR_EXPRESSION,
-                    QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
-                    QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
-                    QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
-                ],
+                $this->getAllowedExpressionIdentifiers($valueOnlyFilterFactory),
             ),
 
             QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION => new ConcParser(
@@ -109,13 +96,7 @@ class QueryLanguageGrammarFactory
 
             QueryLanguageGrammarRuleIdentifier::AND_EXPRESSION => new ConcParser(
                 [
-                    new LazyAltParser(
-                        [
-                            QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
-                            QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
-                            QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
-                        ],
-                    ),
+                    new LazyAltParser($this->getAllowedChildExpressionIdentifiers($valueOnlyFilterFactory)),
                     QueryLanguageGrammarRuleIdentifier::AND_OPERATOR,
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                 ],
@@ -128,13 +109,7 @@ class QueryLanguageGrammarFactory
 
             QueryLanguageGrammarRuleIdentifier::OR_EXPRESSION => new ConcParser(
                 [
-                    new LazyAltParser(
-                        [
-                            QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
-                            QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
-                            QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
-                        ],
-                    ),
+                    new LazyAltParser($this->getAllowedChildExpressionIdentifiers($valueOnlyFilterFactory)),
                     QueryLanguageGrammarRuleIdentifier::OR_OPERATOR,
                     QueryLanguageGrammarRuleIdentifier::EXPRESSION,
                 ],
@@ -180,6 +155,12 @@ class QueryLanguageGrammarFactory
             ),
         ];
 
+        if ($valueOnlyFilterFactory !== null) {
+            $basicParsers[QueryLanguageGrammarRuleIdentifier::VALUE_ONLY_EXPRESSION] = ValueOnlyParserCreator::create(
+                static fn(string $value) => $valueOnlyFilterFactory->create($value),
+            );
+        }
+
         foreach ($operators as $operator) {
             $basicParsers[$operator->getOperatorIdentifier()] = $operator->createOperatorParser();
         }
@@ -193,6 +174,44 @@ class QueryLanguageGrammarFactory
             QueryLanguageGrammarRuleIdentifier::QUERY,
             array_merge($basicParsers, ...$fieldParsers),
         );
+    }
+
+
+    /**
+     * @return array<string>
+     */
+    private function getAllowedExpressionIdentifiers(?ValueOnlyFilterFactory $valueOnlyFilterFactory = null): array
+    {
+        $allowedExpressions = [
+            QueryLanguageGrammarRuleIdentifier::AND_EXPRESSION,
+            QueryLanguageGrammarRuleIdentifier::OR_EXPRESSION,
+            QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
+            QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
+            QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
+        ];
+        if ($valueOnlyFilterFactory !== null) {
+            $allowedExpressions[] = QueryLanguageGrammarRuleIdentifier::VALUE_ONLY_EXPRESSION;
+        }
+
+        return $allowedExpressions;
+    }
+
+
+    /**
+     * @return array<string>
+     */
+    private function getAllowedChildExpressionIdentifiers(?ValueOnlyFilterFactory $valueOnlyFilterFactory = null): array
+    {
+        $childExpressionIdentifiers = [
+            QueryLanguageGrammarRuleIdentifier::FIELD_EXPRESSION,
+            QueryLanguageGrammarRuleIdentifier::SUB_EXPRESSION,
+            QueryLanguageGrammarRuleIdentifier::NOT_SUB_EXPRESSION,
+        ];
+        if ($valueOnlyFilterFactory !== null) {
+            $childExpressionIdentifiers[] = QueryLanguageGrammarRuleIdentifier::VALUE_ONLY_EXPRESSION;
+        }
+
+        return $childExpressionIdentifiers;
     }
 
 

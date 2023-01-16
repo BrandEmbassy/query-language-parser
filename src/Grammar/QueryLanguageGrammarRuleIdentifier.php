@@ -17,6 +17,7 @@ class QueryLanguageGrammarRuleIdentifier
     public const NOT_SUB_EXPRESSION = 'notSubExpression';
     public const SUB_EXPRESSION = 'subExpression';
     public const FIELD_EXPRESSION = 'field';
+    public const VALUE_ONLY_EXPRESSION = 'valueOnly';
 
     public const OR_EXPRESSION = 'or';
     public const AND_EXPRESSION = 'and';

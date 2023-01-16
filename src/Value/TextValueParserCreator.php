@@ -16,6 +16,7 @@ class TextValueParserCreator
 {
     use StaticClass;
 
+    //public const TEXT_VALUE_PARSER_TEMPLATE = '/^(["]{1}%s["]{1})|([\']{1}%s[\']{1})$/';
     public const TEXT_VALUE_PARSER_TEMPLATE = '/^(["]{1}%s["]{1})|([\']{1}%s[\']{1})/';
 
 

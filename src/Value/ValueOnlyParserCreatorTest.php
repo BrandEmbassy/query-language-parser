@@ -2,9 +2,7 @@
 
 namespace BrandEmbassy\QueryLanguageParser\Value;
 
-use BrandEmbassy\QueryLanguageParser\Field\ValueOnlyQueryLanguageField;
 use Ferno\Loco\GrammarException;
-use Ferno\Loco\MonoParser;
 use Ferno\Loco\ParseFailureException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -22,12 +20,11 @@ class ValueOnlyParserCreatorTest extends TestCase
      */
     public function testParsingSucceeded(string $valueToParse): void
     {
-        $filter = $this->createFilter();
-        $parser = ValueOnlyParserCreator::create($filter);
+        $parser = ValueOnlyParserCreator::create();
 
         $actualValue = $parser->parse($valueToParse);
 
-        Assert::assertSame($valueToParse . '_filter', $actualValue);
+        Assert::assertSame($valueToParse, $actualValue);
     }
 
 
@@ -54,8 +51,7 @@ class ValueOnlyParserCreatorTest extends TestCase
      */
     public function testParsingFailed(string $valueToParse): void
     {
-        $filter = $this->createFilter();
-        $parser = ValueOnlyParserCreator::create($filter);
+        $parser = ValueOnlyParserCreator::create();
 
         $this->expectException(ParseFailureException::class);
 
@@ -79,34 +75,5 @@ class ValueOnlyParserCreatorTest extends TestCase
             ['valueToParse' => 'foobar<'],
             ['valueToParse' => 'foobar>'],
         ];
-    }
-
-
-    private function createFilter(): ValueOnlyQueryLanguageField
-    {
-        return new class () implements ValueOnlyQueryLanguageField {
-            public function getFieldIdentifier(): string
-            {
-                return 'valueOnly';
-            }
-
-
-            public function getFieldNameParserIdentifier(): string
-            {
-                return 'valueOnly.fieldName';
-            }
-
-
-            public function createFieldNameParser(): MonoParser
-            {
-                return StringValueParserCreator::create();
-            }
-
-
-            public function createFilter(string $value): string
-            {
-                return $value . '_filter';
-            }
-        };
     }
 }

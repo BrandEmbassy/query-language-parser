@@ -30,7 +30,6 @@ final class CarQueryParserFactory
                 new CarBrandQueryLanguageField(),
                 new CarColorQueryLanguageField(),
                 new CarNumberOfDoorsQueryLanguageField(),
-                new CarValueOnlyQueryLanguageField(),
             ],
             [
                 new EqualToQueryLanguageOperator(),

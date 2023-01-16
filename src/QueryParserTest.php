@@ -11,9 +11,11 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\OrFilter;
+use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarBrandValueOnlyFilterFactory;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use function assert;
 
 /**
@@ -23,12 +25,15 @@ class QueryParserTest extends TestCase
 {
     /**
      * @dataProvider queryToParseProvider
+     *
+     * @throws Throwable
      */
     public function testCaseQueryIsParsed(callable $expectedFilterMatcher, string $query): void
     {
         $parser = $this->createQueryParser();
 
-        $actualFilter = $parser->parse($query);
+        //$actualFilter = $parser->parse($query);
+        $actualFilter = $parser->parse($query, new CarBrandValueOnlyFilterFactory());
 
         $expectedFilterMatcher($actualFilter);
     }
@@ -45,13 +50,6 @@ class QueryParserTest extends TestCase
                     Assert::assertNull($filter);
                 },
                 'query' => '',
-            ],
-
-            'value only' => [
-                'expectedFilter' => function (?CarFilter $filter): void {
-                    $this->assertCarBrandFilter(['BMW'], $filter);
-                },
-                'query' => 'BMW',
             ],
 
             'basic filter' => [
@@ -73,6 +71,20 @@ class QueryParserTest extends TestCase
                     $this->assertCarBrandFilter(['Alfa romeo'], $filter);
                 },
                 'query' => 'brand = "Alfa romeo"',
+            ],
+
+            'value only' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['BMW'], $filter);
+                },
+                'query' => 'BMW',
+            ],
+
+            'quoted value only' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['Alfa romeo'], $filter);
+                },
+                'query' => '"Alfa romeo"',
             ],
 
             'AND' => [
@@ -295,6 +307,8 @@ class QueryParserTest extends TestCase
 
     /**
      * @dataProvider fieldsAndOperatorsToParseProvider
+     *
+     * @throws Throwable
      */
     public function testAllFieldsAndOperatorsCanBeParsed(string $query): void
     {
