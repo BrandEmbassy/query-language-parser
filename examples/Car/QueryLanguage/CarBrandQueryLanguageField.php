@@ -15,7 +15,9 @@ use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupporti
 use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeSymbolOperator;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\StringValueParserCreator;
+use BrandEmbassy\QueryLanguageParser\Value\TextValueParserCreator;
 use Ferno\Loco\GrammarException;
+use Ferno\Loco\LazyAltParser;
 use Ferno\Loco\MonoParser;
 use Ferno\Loco\StringParser;
 
@@ -60,7 +62,12 @@ final class CarBrandQueryLanguageField
      */
     public function createSingleValueParser(): MonoParser
     {
-        return StringValueParserCreator::create();
+        return new LazyAltParser(
+            [
+                TextValueParserCreator::create(),
+                StringValueParserCreator::create(),
+            ],
+        );
     }
 
 
