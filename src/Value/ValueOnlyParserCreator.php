@@ -24,7 +24,7 @@ class ValueOnlyParserCreator
             [
                 TextValueParserCreator::createWithCustomPattern(
                     '[^,()=<>~"]+',
-                    '[^,()=<>~\']+'
+                    '[^,()=<>~\']+',
                 ),
                 StringValueParserCreator::create(),
             ],

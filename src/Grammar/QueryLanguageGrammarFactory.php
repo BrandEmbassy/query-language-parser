@@ -18,7 +18,6 @@ use Ferno\Loco\RegexParser;
 use Ferno\Loco\StringParser;
 use function array_map;
 use function array_merge;
-use function array_unshift;
 
 /**
  * @final
@@ -61,7 +60,6 @@ class QueryLanguageGrammarFactory
             ),
             new EmptyParser(),
         ];
-
 
         $basicParsers = [
             QueryLanguageGrammarRuleIdentifier::QUERY => new LazyAltParser($queryLazyAltParserInternals),

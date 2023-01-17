@@ -61,9 +61,6 @@ class QueryLanguageGrammarConfiguration
     }
 
 
-    /**
-     * @return ValueOnlyFilterFactory|null
-     */
     public function getValueOnlyFilterFactory(): ?ValueOnlyFilterFactory
     {
         return $this->valueOnlyFilterFactory;

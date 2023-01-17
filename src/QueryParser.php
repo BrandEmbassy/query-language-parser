@@ -4,7 +4,6 @@ namespace BrandEmbassy\QueryLanguageParser;
 
 use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarConfiguration;
 use BrandEmbassy\QueryLanguageParser\Grammar\QueryLanguageGrammarFactory;
-use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyFilterFactory;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\ParseFailureException;
 
