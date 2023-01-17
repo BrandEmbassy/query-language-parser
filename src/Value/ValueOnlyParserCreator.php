@@ -26,7 +26,7 @@ class ValueOnlyParserCreator
                     '[^,()=<>~"]+',
                     '[^,()=<>~\']+'
                 ),
-                StringValueParserCreator::create($callback),
+                StringValueParserCreator::create(),
             ],
             $callback,
         );

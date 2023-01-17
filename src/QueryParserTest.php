@@ -341,7 +341,7 @@ class QueryParserTest extends TestCase
 
 
     /**
-     * @return Generator<array<string, string>>
+     * @return Generator<string, array<string, mixed>>
      */
     public function fieldsAndOperatorsToParseProvider(): Generator
     {
