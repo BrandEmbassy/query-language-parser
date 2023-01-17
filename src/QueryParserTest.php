@@ -352,7 +352,7 @@ class QueryParserTest extends TestCase
             'numberOfDoors = 5',
 
             /* ********** OPERATORS ********** */
-            'brand = bmw',
+            'brand = audi',
             'brand != bmw',
             'brand ~ bmw',
             'brand !~ bmw',
@@ -373,7 +373,7 @@ class QueryParserTest extends TestCase
                 $scenarioName = $query . ($useValueOnlyFilter ? ' / supporting value only filter' : '');
 
                 yield $scenarioName => [
-                    'query' => $queries,
+                    'query' => $query,
                     'useValueOnlyFilter' => $useValueOnlyFilter,
                 ];
             }
