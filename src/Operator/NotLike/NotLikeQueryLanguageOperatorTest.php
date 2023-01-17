@@ -8,6 +8,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFa
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use function assert;
 
 /**
@@ -15,12 +16,17 @@ use function assert;
  */
 class NotLikeQueryLanguageOperatorTest extends TestCase
 {
+    private const DO_NOT_USE_VALUE_ONLY_FILTER = false;
+
+
     /**
      * @dataProvider queryToBeParsedProvider
+     *
+     * @throws Throwable
      */
     public function testOperatorCanBeParsed(string $query): void
     {
-        $parser = (new CarQueryParserFactory())->create();
+        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
 
         $result = $parser->parse($query);
 
@@ -49,7 +55,7 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
      */
     public function testOperatorCanNotBeParsed(string $query): void
     {
-        $parser = (new CarQueryParserFactory())->create();
+        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
 
         $this->expectException(UnableToParseQueryException::class);
         $parser->parse($query);

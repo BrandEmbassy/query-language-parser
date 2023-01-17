@@ -32,10 +32,11 @@ class QueryParser
      *
      * @throws UnableToParseQueryException
      */
-    public function parse(string $query, ?ValueOnlyFilterFactory $valueOnlyFilterFactory = null)
+    public function parse(string $query)
     {
         $fields = $this->grammarConfiguration->getFields();
         $operators = $this->grammarConfiguration->getOperators();
+        $valueOnlyFilterFactory = $this->grammarConfiguration->getValueOnlyFilterFactory();
 
         try {
             $grammar = $this->grammarFactory->create($fields, $operators, $valueOnlyFilterFactory);

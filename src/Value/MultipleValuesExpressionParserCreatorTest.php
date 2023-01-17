@@ -7,6 +7,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFa
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use function assert;
 
 /**
@@ -14,16 +15,21 @@ use function assert;
  */
 class MultipleValuesExpressionParserCreatorTest extends TestCase
 {
+    private const DO_NOT_USE_VALUE_ONLY_FILTER = false;
+
+
     /**
      * @dataProvider validMultipleValueExpressionProvider
      *
      * @param string[] $expectedValues
+     *
+     * @throws Throwable
      */
     public function testParsingValidMultipleValueExpression(
         array $expectedValues,
         string $multipleValueExpression
     ): void {
-        $parser = (new CarQueryParserFactory())->create();
+        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
         $valueToParse = 'brand IN ' . $multipleValueExpression;
 
         $result = $parser->parse($valueToParse);
@@ -72,7 +78,7 @@ class MultipleValuesExpressionParserCreatorTest extends TestCase
      */
     public function testParsingInvalidMultipleValueExpression(string $multipleValueExpression): void
     {
-        $parser = (new CarQueryParserFactory())->create();
+        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
         $valueToParse = 'brand IN ' . $multipleValueExpression;
 
         $this->expectException(UnableToParseQueryException::class);

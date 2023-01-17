@@ -23,7 +23,7 @@ use BrandEmbassy\QueryLanguageParser\QueryParser;
 
 final class CarQueryParserFactory
 {
-    public function create(): QueryParser
+    public function create(bool $useValueOnlyFilter): QueryParser
     {
         $configuration = new QueryLanguageGrammarConfiguration(
             [
@@ -46,7 +46,8 @@ final class CarQueryParserFactory
                 new LessThanOrEqualToQueryLanguageOperator(),
                 new GreaterThanQueryLanguageOperator(),
                 new GreaterThanOrEqualToQueryLanguageOperator(),
-            ]
+            ],
+            $useValueOnlyFilter ? new CarBrandValueOnlyFilterFactory() : null,
         );
 
         $grammarFactory = new QueryLanguageGrammarFactory(

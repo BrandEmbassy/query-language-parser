@@ -18,13 +18,13 @@ class ValueOnlyParserCreatorTest extends TestCase
      * @throws GrammarException
      * @throws ParseFailureException
      */
-    public function testParsingSucceeded(string $valueToParse): void
+    public function testParsingSucceeded(string $expectedValue, string $valueToParse): void
     {
         $parser = ValueOnlyParserCreator::create();
 
         $actualValue = $parser->parse($valueToParse);
 
-        Assert::assertSame($valueToParse, $actualValue);
+        Assert::assertSame($expectedValue, $actualValue);
     }
 
 
@@ -34,11 +34,50 @@ class ValueOnlyParserCreatorTest extends TestCase
     public function validStringValueProvider(): array
     {
         return [
-            ['valueToParse' => 'hello'],
-            ['valueToParse' => 'foo-bar'],
-            ['valueToParse' => 'Foo_Bar_1234'],
-            ['valueToParse' => '!F7:1F9@prod.o.com'],
-            ['valueToParse' => 'abcd+ef;gh'],
+            [
+                'expectedValue' => 'hello',
+                'valueToParse' => 'hello',
+            ],
+            [
+                'expectedValue' => 'foo-bar',
+                'valueToParse' => 'foo-bar',
+            ],
+            [
+                'expectedValue' => 'Foo_Bar_1234',
+                'valueToParse' => 'Foo_Bar_1234',
+            ],
+            [
+                'expectedValue' => '!F7:1F9@prod.o.com',
+                'valueToParse' => '!F7:1F9@prod.o.com',
+            ],
+            [
+                'expectedValue' => 'abcd+ef;gh',
+                'valueToParse' => 'abcd+ef;gh',
+            ],
+            [
+                'expectedValue' => 'hello',
+                'valueToParse' => '"hello"',
+            ],
+            [
+                'expectedValue' => 'foo-bar',
+                'valueToParse' => '"foo-bar"',
+            ],
+            [
+                'expectedValue' => 'Foo_Bar_1234',
+                'valueToParse' => '"Foo_Bar_1234"',
+            ],
+            [
+                'expectedValue' => '!F7:1F9@prod.o.com',
+                'valueToParse' => '"!F7:1F9@prod.o.com"',
+            ],
+            [
+                'expectedValue' => 'abcd+ef;gh',
+                'valueToParse' => '"abcd+ef;gh"',
+            ],
+            [
+                'expectedValue' => 'Something with spaces',
+                'valueToParse' => '"Something with spaces"',
+            ],
         ];
     }
 
