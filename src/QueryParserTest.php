@@ -61,6 +61,13 @@ class QueryParserTest extends TestCase
                 'query' => '   brand  =       bmw ',
             ],
 
+            'basic filter double quoted' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['Alfa romeo'], $filter);
+                },
+                'query' => 'brand = "Alfa romeo"',
+            ],
+
             'AND' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     assert($filter instanceof AndFilter);
