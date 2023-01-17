@@ -383,7 +383,11 @@ class QueryParserTest extends TestCase
 
     private function createQueryParser(bool $useValueOnlyFilter): QueryParser
     {
-        return (new CarQueryParserFactory())->create($useValueOnlyFilter);
+        if ($useValueOnlyFilter) {
+            return (new CarQueryParserFactory())->createWithValueOnlyTermSupport();
+        }
+
+        return (new CarQueryParserFactory())->create();
     }
 
 

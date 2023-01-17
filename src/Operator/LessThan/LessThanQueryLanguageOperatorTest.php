@@ -14,9 +14,6 @@ use function assert;
  */
 class LessThanQueryLanguageOperatorTest extends TestCase
 {
-    private const DO_NOT_USE_VALUE_ONLY_FILTER = false;
-
-
     /**
      * @dataProvider queryToBeParsedProvider
      *
@@ -24,7 +21,7 @@ class LessThanQueryLanguageOperatorTest extends TestCase
      */
     public function testOperatorCanBeParsed(string $query): void
     {
-        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
+        $parser = (new CarQueryParserFactory())->create();
 
         $result = $parser->parse($query);
 

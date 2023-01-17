@@ -15,9 +15,6 @@ use function assert;
  */
 class LikeQueryLanguageOperatorTest extends TestCase
 {
-    private const DO_NOT_USE_VALUE_ONLY_FILTER = false;
-
-
     /**
      * @dataProvider queryToBeParsedProvider
      *
@@ -25,7 +22,7 @@ class LikeQueryLanguageOperatorTest extends TestCase
      */
     public function testOperatorCanBeParsed(string $query): void
     {
-        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
+        $parser = (new CarQueryParserFactory())->create();
 
         $result = $parser->parse($query);
 
@@ -51,7 +48,7 @@ class LikeQueryLanguageOperatorTest extends TestCase
      */
     public function testOperatorCanNotBeParsed(string $query): void
     {
-        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
+        $parser = (new CarQueryParserFactory())->create();
 
         $this->expectException(UnableToParseQueryException::class);
         $parser->parse($query);

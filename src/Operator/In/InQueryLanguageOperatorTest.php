@@ -14,9 +14,6 @@ use function assert;
  */
 class InQueryLanguageOperatorTest extends TestCase
 {
-    private const DO_NOT_USE_VALUE_ONLY_FILTER = false;
-
-
     /**
      * @dataProvider queryToBeParsedProvider
      *
@@ -26,7 +23,7 @@ class InQueryLanguageOperatorTest extends TestCase
      */
     public function testOperatorCanBeParsed(array $expectedBrands, string $query): void
     {
-        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
+        $parser = (new CarQueryParserFactory())->create();
 
         $result = $parser->parse($query);
 

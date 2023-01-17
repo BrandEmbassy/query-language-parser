@@ -78,6 +78,30 @@ class ValueOnlyParserCreatorTest extends TestCase
                 'expectedValue' => 'Something with spaces',
                 'valueToParse' => '"Something with spaces"',
             ],
+            [
+                'expectedValue' => 'hello',
+                'valueToParse' => "'hello'",
+            ],
+            [
+                'expectedValue' => 'foo-bar',
+                'valueToParse' => "'foo-bar'",
+            ],
+            [
+                'expectedValue' => 'Foo_Bar_1234',
+                'valueToParse' => "'Foo_Bar_1234'",
+            ],
+            [
+                'expectedValue' => '!F7:1F9@prod.o.com',
+                'valueToParse' => "'!F7:1F9@prod.o.com'",
+            ],
+            [
+                'expectedValue' => 'abcd+ef;gh',
+                'valueToParse' => "'abcd+ef;gh'",
+            ],
+            [
+                'expectedValue' => 'Something with spaces',
+                'valueToParse' => "'Something with spaces'",
+            ],
         ];
     }
 

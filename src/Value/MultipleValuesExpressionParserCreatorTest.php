@@ -15,9 +15,6 @@ use function assert;
  */
 class MultipleValuesExpressionParserCreatorTest extends TestCase
 {
-    private const DO_NOT_USE_VALUE_ONLY_FILTER = false;
-
-
     /**
      * @dataProvider validMultipleValueExpressionProvider
      *
@@ -29,7 +26,7 @@ class MultipleValuesExpressionParserCreatorTest extends TestCase
         array $expectedValues,
         string $multipleValueExpression
     ): void {
-        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
+        $parser = (new CarQueryParserFactory())->create();
         $valueToParse = 'brand IN ' . $multipleValueExpression;
 
         $result = $parser->parse($valueToParse);
@@ -78,7 +75,7 @@ class MultipleValuesExpressionParserCreatorTest extends TestCase
      */
     public function testParsingInvalidMultipleValueExpression(string $multipleValueExpression): void
     {
-        $parser = (new CarQueryParserFactory())->create(self::DO_NOT_USE_VALUE_ONLY_FILTER);
+        $parser = (new CarQueryParserFactory())->create();
         $valueToParse = 'brand IN ' . $multipleValueExpression;
 
         $this->expectException(UnableToParseQueryException::class);
