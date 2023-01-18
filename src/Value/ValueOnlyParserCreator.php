@@ -23,8 +23,8 @@ class ValueOnlyParserCreator
         return new LazyAltParser(
             [
                 TextValueParserCreator::createWithCustomPattern(
-                    '[^,()=<>~"]+',
-                    '[^,()=<>~\']+',
+                    '[^,()"]+',
+                    '[^,()\']+',
                 ),
                 StringValueParserCreator::create(),
             ],

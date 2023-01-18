@@ -134,9 +134,6 @@ class ValueOnlyParserCreatorTest extends TestCase
             ['valueToParse' => 'foobar,'],
             ['valueToParse' => 'foobar('],
             ['valueToParse' => 'foobar)'],
-            ['valueToParse' => 'foobar='],
-            ['valueToParse' => 'foobar<'],
-            ['valueToParse' => 'foobar>'],
         ];
     }
 }
