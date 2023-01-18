@@ -25,7 +25,34 @@ final class CarQueryParserFactory
 {
     public function create(): QueryParser
     {
-        $configuration = new QueryLanguageGrammarConfiguration(
+        $configuration = $this->createGrammarConfiguration(null);
+
+        $grammarFactory = new QueryLanguageGrammarFactory(
+            new QueryLanguageFieldGrammarFactory(),
+            new CarLogicalFiltersFactory()
+        );
+
+        return new QueryParser($configuration, $grammarFactory);
+    }
+
+
+    public function createWithValueOnlyTermSupport(): QueryParser
+    {
+        $configuration = $this->createGrammarConfiguration(new CarBrandValueOnlyFilterFactory());
+
+        $grammarFactory = new QueryLanguageGrammarFactory(
+            new QueryLanguageFieldGrammarFactory(),
+            new CarLogicalFiltersFactory()
+        );
+
+        return new QueryParser($configuration, $grammarFactory);
+    }
+
+
+    private function createGrammarConfiguration(
+        ?CarBrandValueOnlyFilterFactory $valueOnlyFilterFactory
+    ): QueryLanguageGrammarConfiguration {
+        return new QueryLanguageGrammarConfiguration(
             [
                 new CarBrandQueryLanguageField(),
                 new CarColorQueryLanguageField(),
@@ -46,14 +73,8 @@ final class CarQueryParserFactory
                 new LessThanOrEqualToQueryLanguageOperator(),
                 new GreaterThanQueryLanguageOperator(),
                 new GreaterThanOrEqualToQueryLanguageOperator(),
-            ]
+            ],
+            $valueOnlyFilterFactory,
         );
-
-        $grammarFactory = new QueryLanguageGrammarFactory(
-            new QueryLanguageFieldGrammarFactory(),
-            new CarLogicalFiltersFactory()
-        );
-
-        return new QueryParser($configuration, $grammarFactory);
     }
 }

@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Grammar;
 use Assert\Assertion;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyFilterFactory;
 
 /**
  * @final
@@ -21,18 +22,24 @@ class QueryLanguageGrammarConfiguration
      */
     private array $operators;
 
+    private ?ValueOnlyFilterFactory $valueOnlyFilterFactory;
+
 
     /**
      * @param QueryLanguageField[] $fields
      * @param QueryLanguageOperator[] $operators
      */
-    public function __construct(array $fields, array $operators)
-    {
+    public function __construct(
+        array $fields,
+        array $operators,
+        ?ValueOnlyFilterFactory $valueOnlyFilterFactory = null
+    ) {
         Assertion::allIsInstanceOf($fields, QueryLanguageField::class);
         Assertion::allIsInstanceOf($operators, QueryLanguageOperator::class);
 
         $this->fields = $fields;
         $this->operators = $operators;
+        $this->valueOnlyFilterFactory = $valueOnlyFilterFactory;
     }
 
 
@@ -51,5 +58,11 @@ class QueryLanguageGrammarConfiguration
     public function getOperators(): array
     {
         return $this->operators;
+    }
+
+
+    public function getValueOnlyFilterFactory(): ?ValueOnlyFilterFactory
+    {
+        return $this->valueOnlyFilterFactory;
     }
 }

@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Value;
 use Ferno\Loco\ParseFailureException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * @final
@@ -13,6 +14,8 @@ class StringValueParserCreatorTest extends TestCase
 {
     /**
      * @dataProvider validStringValueProvider
+     *
+     * @throws Throwable
      */
     public function testParsingValidStringValue(string $valueToParse): void
     {
@@ -41,6 +44,8 @@ class StringValueParserCreatorTest extends TestCase
 
     /**
      * @dataProvider invalidStringValueProvider
+     *
+     * @throws Throwable
      */
     public function testParsingInvalidStringValue(string $valueToParse): void
     {

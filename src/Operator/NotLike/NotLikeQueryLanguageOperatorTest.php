@@ -8,6 +8,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFa
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use function assert;
 
 /**
@@ -17,6 +18,8 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider
+     *
+     * @throws Throwable
      */
     public function testOperatorCanBeParsed(string $query): void
     {

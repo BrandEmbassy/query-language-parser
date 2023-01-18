@@ -12,8 +12,11 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\OrFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use function array_merge;
 use function assert;
 
 /**
@@ -23,10 +26,15 @@ class QueryParserTest extends TestCase
 {
     /**
      * @dataProvider queryToParseProvider
+     *
+     * @throws Throwable
      */
-    public function testCaseQueryIsParsed(callable $expectedFilterMatcher, string $query): void
-    {
-        $parser = $this->createQueryParser();
+    public function testCaseQueryIsParsed(
+        callable $expectedFilterMatcher,
+        string $query,
+        bool $useValueOnlyFilter
+    ): void {
+        $parser = $this->createQueryParser($useValueOnlyFilter);
 
         $actualFilter = $parser->parse($query);
 
@@ -35,11 +43,11 @@ class QueryParserTest extends TestCase
 
 
     /**
-     * @return mixed[]
+     * @return Generator<string, array<string, mixed>>
      */
-    public function queryToParseProvider(): array
+    public function queryToParseProvider(): Generator
     {
-        return [
+        $basicScenarios = [
             'empty query' => [
                 'expectedFilter' => static function (?CarFilter $filter): void {
                     Assert::assertNull($filter);
@@ -283,15 +291,48 @@ class QueryParserTest extends TestCase
                 'query' => '  color      ~   ello    AND   brand  !~    mw      ',
             ],
         ];
+        $valueOnlyScenarios = [
+            'value only' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['BMW'], $filter);
+                },
+                'query' => 'BMW',
+            ],
+
+            'quoted value only' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['Alfa romeo'], $filter);
+                },
+                'query' => '"Alfa romeo"',
+            ],
+        ];
+
+        foreach ([true, false] as $useValueOnlyFilter) {
+            $scenarios = $useValueOnlyFilter
+                ? array_merge($basicScenarios, $valueOnlyScenarios)
+                : $basicScenarios;
+            foreach ($scenarios as $scenarioName => $scenario) {
+                $scenarioName .= ($useValueOnlyFilter ? ' (supporting value only filter)' : '');
+
+                yield $scenarioName => array_merge(
+                    $scenario,
+                    [
+                        'useValueOnlyFilter' => $useValueOnlyFilter,
+                    ],
+                );
+            }
+        }
     }
 
 
     /**
      * @dataProvider fieldsAndOperatorsToParseProvider
+     *
+     * @throws Throwable
      */
-    public function testAllFieldsAndOperatorsCanBeParsed(string $query): void
+    public function testAllFieldsAndOperatorsCanBeParsed(string $query, bool $useValueOnlyFilter): void
     {
-        $parser = $this->createQueryParser();
+        $parser = $this->createQueryParser($useValueOnlyFilter);
 
         $result = $parser->parse($query);
 
@@ -300,37 +341,52 @@ class QueryParserTest extends TestCase
 
 
     /**
-     * @return string[][]
+     * @return Generator<string, array<string, mixed>>
      */
-    public function fieldsAndOperatorsToParseProvider(): array
+    public function fieldsAndOperatorsToParseProvider(): Generator
     {
-        return [
+        $queries = [
             /* ********** FIELDS ********** */
-            ['query' => 'brand = bmw'],
-            ['query' => 'color = yellow'],
-            ['query' => 'numberOfDoors = 5'],
+            'brand = bmw',
+            'color = yellow',
+            'numberOfDoors = 5',
 
             /* ********** OPERATORS ********** */
-            ['query' => 'brand = bmw'],
-            ['query' => 'brand != bmw'],
-            ['query' => 'brand ~ bmw'],
-            ['query' => 'brand !~ bmw'],
-            ['query' => 'brand LIKE bmw'],
-            ['query' => 'brand NOT LIKE bmw'],
-            ['query' => 'brand IN (bmw, audi)'],
-            ['query' => 'brand NOT IN (bmw, audi)'],
-            ['query' => 'color IS NULL'],
-            ['query' => 'color IS NOT NULL'],
-            ['query' => 'numberOfDoors > 4'],
-            ['query' => 'numberOfDoors >= 4'],
-            ['query' => 'numberOfDoors < 4'],
-            ['query' => 'numberOfDoors <= 4'],
+            'brand = audi',
+            'brand != bmw',
+            'brand ~ bmw',
+            'brand !~ bmw',
+            'brand LIKE bmw',
+            'brand NOT LIKE bmw',
+            'brand IN (bmw, audi)',
+            'brand NOT IN (bmw, audi)',
+            'color IS NULL',
+            'color IS NOT NULL',
+            'numberOfDoors > 4',
+            'numberOfDoors >= 4',
+            'numberOfDoors < 4',
+            'numberOfDoors <= 4',
         ];
+
+        foreach ([true, false] as $useValueOnlyFilter) {
+            foreach ($queries as $query) {
+                $scenarioName = $query . ($useValueOnlyFilter ? ' / supporting value only filter' : '');
+
+                yield $scenarioName => [
+                    'query' => $query,
+                    'useValueOnlyFilter' => $useValueOnlyFilter,
+                ];
+            }
+        }
     }
 
 
-    private function createQueryParser(): QueryParser
+    private function createQueryParser(bool $useValueOnlyFilter): QueryParser
     {
+        if ($useValueOnlyFilter) {
+            return (new CarQueryParserFactory())->createWithValueOnlyTermSupport();
+        }
+
         return (new CarQueryParserFactory())->create();
     }
 

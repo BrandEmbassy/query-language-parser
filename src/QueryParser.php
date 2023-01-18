@@ -35,9 +35,10 @@ class QueryParser
     {
         $fields = $this->grammarConfiguration->getFields();
         $operators = $this->grammarConfiguration->getOperators();
+        $valueOnlyFilterFactory = $this->grammarConfiguration->getValueOnlyFilterFactory();
 
         try {
-            $grammar = $this->grammarFactory->create($fields, $operators);
+            $grammar = $this->grammarFactory->create($fields, $operators, $valueOnlyFilterFactory);
 
             return $grammar->parse($query);
         } catch (GrammarException | ParseFailureException $e) {

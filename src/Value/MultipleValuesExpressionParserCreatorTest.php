@@ -7,6 +7,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFa
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use function assert;
 
 /**
@@ -18,6 +19,8 @@ class MultipleValuesExpressionParserCreatorTest extends TestCase
      * @dataProvider validMultipleValueExpressionProvider
      *
      * @param string[] $expectedValues
+     *
+     * @throws Throwable
      */
     public function testParsingValidMultipleValueExpression(
         array $expectedValues,

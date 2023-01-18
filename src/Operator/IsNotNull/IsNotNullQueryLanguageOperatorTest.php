@@ -6,6 +6,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * @final
@@ -14,6 +15,8 @@ class IsNotNullQueryLanguageOperatorTest extends TestCase
 {
     /**
      * @dataProvider queryToBeParsedProvider
+     *
+     * @throws Throwable
      */
     public function testOperatorCanBeParsed(string $query): void
     {
