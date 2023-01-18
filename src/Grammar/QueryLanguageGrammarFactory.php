@@ -49,20 +49,20 @@ class QueryLanguageGrammarFactory
         array $operators,
         ?ValueOnlyFilterFactory $valueOnlyFilterFactory = null
     ): Grammar {
-        $queryLazyAltParserInternals = [
-            new ConcParser(
-                [
-                    QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-                    QueryLanguageGrammarRuleIdentifier::EXPRESSION,
-                    QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
-                ],
-                static fn($whitespace1, $output, $whitespace2) => $output,
-            ),
-            new EmptyParser(),
-        ];
-
         $basicParsers = [
-            QueryLanguageGrammarRuleIdentifier::QUERY => new LazyAltParser($queryLazyAltParserInternals),
+            QueryLanguageGrammarRuleIdentifier::QUERY => new LazyAltParser(
+                [
+                    new ConcParser(
+                        [
+                            QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
+                            QueryLanguageGrammarRuleIdentifier::EXPRESSION,
+                            QueryLanguageGrammarRuleIdentifier::OPTIONAL_WHITESPACE,
+                        ],
+                        static fn($whitespace1, $output, $whitespace2) => $output,
+                    ),
+                    new EmptyParser(),
+                ],
+            ),
 
             QueryLanguageGrammarRuleIdentifier::EXPRESSION => new LazyAltParser(
                 $this->getAllowedExpressionIdentifiers($valueOnlyFilterFactory),
