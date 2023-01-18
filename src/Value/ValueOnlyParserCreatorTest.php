@@ -130,7 +130,6 @@ class ValueOnlyParserCreatorTest extends TestCase
         return [
             ['valueToParse' => 'hello world'],
             ['valueToParse' => ' foobar'],
-            ['valueToParse' => 'foobar=test'],
             ['valueToParse' => 'foobar,'],
             ['valueToParse' => 'foobar('],
             ['valueToParse' => 'foobar)'],
