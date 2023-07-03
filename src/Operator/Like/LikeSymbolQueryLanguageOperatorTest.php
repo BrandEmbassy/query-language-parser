@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\Like;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -23,7 +24,7 @@ class LikeSymbolQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof CarBrandLikeFilter);
         Assert::assertSame('bmw', $result->getBrand());

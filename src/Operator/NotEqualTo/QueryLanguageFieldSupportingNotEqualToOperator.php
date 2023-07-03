@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingNotEqualToOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingNotEqualToOperator extends QueryLanguageFi
      *
      * @return mixed
      */
-    public function createNotEqualToOperatorOutput($fieldName, $value);
+    public function createNotEqualToOperatorOutput($fieldName, $value, QueryParserContext $context);
 }

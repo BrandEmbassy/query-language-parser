@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\IsNull;
 
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingIsNullOperator extends QueryLanguageField
 {
@@ -11,5 +12,5 @@ interface QueryLanguageFieldSupportingIsNullOperator extends QueryLanguageField
      *
      * @return mixed
      */
-    public function createIsNullOperatorOutput($fieldName);
+    public function createIsNullOperatorOutput($fieldName, QueryParserContext $context);
 }

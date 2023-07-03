@@ -31,14 +31,14 @@ class QueryParser
      *
      * @throws UnableToParseQueryException
      */
-    public function parse(string $query)
+    public function parse(string $query, QueryParserContext $context)
     {
         $fields = $this->grammarConfiguration->getFields();
         $operators = $this->grammarConfiguration->getOperators();
         $valueOnlyFilterFactory = $this->grammarConfiguration->getValueOnlyFilterFactory();
 
         try {
-            $grammar = $this->grammarFactory->create($fields, $operators, $valueOnlyFilterFactory);
+            $grammar = $this->grammarFactory->create($fields, $operators, $context, $valueOnlyFilterFactory);
 
             return $grammar->parse($query);
         } catch (GrammarException | ParseFailureException $e) {

@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\NotLike;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +26,7 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof NotFilter);
 
@@ -55,7 +56,7 @@ class NotLikeQueryLanguageOperatorTest extends TestCase
         $parser = (new CarQueryParserFactory())->create();
 
         $this->expectException(UnableToParseQueryException::class);
-        $parser->parse($query);
+        $parser->parse($query, new QueryParserContext());
     }
 
 

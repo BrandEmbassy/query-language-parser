@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\In;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperatorParserCreator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
@@ -39,7 +40,7 @@ class InQueryLanguageOperator implements QueryLanguageOperator
     }
 
 
-    public function createFieldExpressionParser(QueryLanguageField $field): MonoParser
+    public function createFieldExpressionParser(QueryLanguageField $field, QueryParserContext $context): MonoParser
     {
         assert($field instanceof QueryLanguageFieldSupportingInOperator);
 
@@ -49,7 +50,7 @@ class InQueryLanguageOperator implements QueryLanguageOperator
                 self::OPERATOR_IDENTIFIER,
                 $field->getMultipleValuesParserIdentifier(),
             ],
-            static fn($identifier, $operator, array $values) => $field->createInOperatorOutput($identifier, $values),
+            static fn($identifier, $operator, array $values) => $field->createInOperatorOutput($identifier, $values, $context),
         );
     }
 }

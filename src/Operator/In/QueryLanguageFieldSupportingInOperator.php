@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\In;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingMultipleValuesOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingInOperator extends QueryLanguageFieldSupportingMultipleValuesOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingInOperator extends QueryLanguageFieldSuppo
      *
      * @return mixed
      */
-    public function createInOperatorOutput($fieldName, array $values);
+    public function createInOperatorOutput($fieldName, array $values, QueryParserContext $context);
 }

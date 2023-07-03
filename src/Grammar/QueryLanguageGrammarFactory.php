@@ -6,6 +6,7 @@ use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageFieldGrammarFactory;
 use BrandEmbassy\QueryLanguageParser\LogicalOperatorOutputFactory;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyFilterFactory;
 use BrandEmbassy\QueryLanguageParser\Value\ValueOnlyParserCreator;
 use Ferno\Loco\ConcParser;
@@ -47,6 +48,7 @@ class QueryLanguageGrammarFactory
     public function create(
         array $fields,
         array $operators,
+        QueryParserContext $context,
         ?ValueOnlyFilterFactory $valueOnlyFilterFactory = null
     ): Grammar {
         $basicParsers = [
@@ -165,7 +167,7 @@ class QueryLanguageGrammarFactory
 
         $fieldParsers = [];
         foreach ($fields as $field) {
-            $fieldParsers[] = $this->fieldGrammarFactory->createParsers($field, $operators);
+            $fieldParsers[] = $this->fieldGrammarFactory->createParsers($field, $operators, $context);
         }
 
         return new Grammar(

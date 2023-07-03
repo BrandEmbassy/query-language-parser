@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\GreaterThan;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperatorParserCreator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
@@ -39,7 +40,7 @@ class GreaterThanQueryLanguageOperator implements QueryLanguageOperator
     }
 
 
-    public function createFieldExpressionParser(QueryLanguageField $field): MonoParser
+    public function createFieldExpressionParser(QueryLanguageField $field, QueryParserContext $context): MonoParser
     {
         assert($field instanceof QueryLanguageFieldSupportingGreaterThanOperator);
 
@@ -49,7 +50,7 @@ class GreaterThanQueryLanguageOperator implements QueryLanguageOperator
                 self::OPERATOR_IDENTIFIER,
                 $field->getSingleValueParserIdentifier(),
             ],
-            static fn($identifier, $operator, $value) => $field->createGreaterThanOperatorOutput($identifier, $value),
+            static fn($identifier, $operator, $value) => $field->createGreaterThanOperatorOutput($identifier, $value, $context),
         );
     }
 }

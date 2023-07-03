@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\Like;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class LikeQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof CarBrandLikeFilter);
         Assert::assertSame('bmw', $result->getBrand());
@@ -51,7 +52,7 @@ class LikeQueryLanguageOperatorTest extends TestCase
         $parser = (new CarQueryParserFactory())->create();
 
         $this->expectException(UnableToParseQueryException::class);
-        $parser->parse($query);
+        $parser->parse($query, new QueryParserContext());
     }
 
 

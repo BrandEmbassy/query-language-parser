@@ -9,6 +9,7 @@ use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarColorLikeFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
+use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarNumberOfDoorsFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\OrFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
@@ -36,7 +37,7 @@ class QueryParserTest extends TestCase
     ): void {
         $parser = $this->createQueryParser($useValueOnlyFilter);
 
-        $actualFilter = $parser->parse($query);
+        $actualFilter = $parser->parse($query, new QueryParserContext());
 
         $expectedFilterMatcher($actualFilter);
     }
@@ -70,6 +71,13 @@ class QueryParserTest extends TestCase
             ],
 
             'basic filter double quoted' => [
+                'expectedFilter' => function (?CarFilter $filter): void {
+                    $this->assertCarBrandFilter(['Alfa romeo'], $filter);
+                },
+                'query' => 'brand = "Alfa romeo"',
+            ],
+
+            'Query parser context is used' => [
                 'expectedFilter' => function (?CarFilter $filter): void {
                     $this->assertCarBrandFilter(['Alfa romeo'], $filter);
                 },
@@ -334,7 +342,7 @@ class QueryParserTest extends TestCase
     {
         $parser = $this->createQueryParser($useValueOnlyFilter);
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         Assert::assertInstanceOf(CarFilter::class, $result);
     }
@@ -378,6 +386,22 @@ class QueryParserTest extends TestCase
                 ];
             }
         }
+    }
+
+
+    /**
+     * @throws Throwable
+     */
+    public function testQueryParserIsUsingContext(): void
+    {
+        $parser = $this->createQueryParser(false);
+        $context = new QueryParserContext();
+        $context->set('number_of_doors_modifier', 3);
+
+        $parsedFilter = $parser->parse('numberOfDoors = 5', $context);
+
+        Assert::assertInstanceOf(CarNumberOfDoorsFilter::class, $parsedFilter);
+        Assert::assertSame([8], $parsedFilter->getNumberOfDoors());
     }
 
 

@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\LessThanOrEqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarNumberOfDoorsLessThanOrEqualFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -23,7 +24,7 @@ class LessThanOrEqualToQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof CarNumberOfDoorsLessThanOrEqualFilter);
         Assert::assertSame(50, $result->getNumberOfDoors());

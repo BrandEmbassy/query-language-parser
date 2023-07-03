@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\GreaterThanOrEqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarNumberOfDoorsGreaterThanOrEqualFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -23,7 +24,7 @@ class GreaterThanOrEqualToQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof CarNumberOfDoorsGreaterThanOrEqualFilter);
         Assert::assertSame(50, $result->getNumberOfDoors());
