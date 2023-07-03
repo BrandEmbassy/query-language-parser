@@ -15,7 +15,7 @@
         "ramsey/uuid": "^4.1"
     },
     "require-dev": {
-        "brandembassy/coding-standard": "^8.1",
+        "brandembassy/coding-standard": "^9.0",
         "phpunit/phpunit": "^8",
         "roave/security-advisories": "dev-master"
     },
