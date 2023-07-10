@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\NotIn;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingMultipleValuesOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingNotInOperator extends QueryLanguageFieldSupportingMultipleValuesOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingNotInOperator extends QueryLanguageFieldSu
      *
      * @return mixed
      */
-    public function createNotInOperatorOutput($fieldName, array $values);
+    public function createNotInOperatorOutput($fieldName, array $values, QueryParserContext $context);
 }

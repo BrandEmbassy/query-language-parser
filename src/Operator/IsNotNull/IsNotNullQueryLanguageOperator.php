@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\IsNotNull;
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperatorParserCreator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use Ferno\Loco\ConcParser;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\MonoParser;
@@ -39,7 +40,7 @@ class IsNotNullQueryLanguageOperator implements QueryLanguageOperator
     }
 
 
-    public function createFieldExpressionParser(QueryLanguageField $field): MonoParser
+    public function createFieldExpressionParser(QueryLanguageField $field, QueryParserContext $context): MonoParser
     {
         assert($field instanceof QueryLanguageFieldSupportingIsNotNullOperator);
 
@@ -48,7 +49,7 @@ class IsNotNullQueryLanguageOperator implements QueryLanguageOperator
                 $field->getFieldNameParserIdentifier(),
                 self::OPERATOR_IDENTIFIER,
             ],
-            static fn($identifier, $operator) => $field->createIsNotNullOperatorOutput($identifier),
+            static fn($identifier, $operator) => $field->createIsNotNullOperatorOutput($identifier, $context),
         );
     }
 }

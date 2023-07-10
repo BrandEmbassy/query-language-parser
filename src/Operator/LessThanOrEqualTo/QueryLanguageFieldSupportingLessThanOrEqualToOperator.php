@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\LessThanOrEqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingLessThanOrEqualToOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingLessThanOrEqualToOperator extends QueryLan
      *
      * @return mixed
      */
-    public function createLessThanOrEqualToOperatorOutput($fieldName, $value);
+    public function createLessThanOrEqualToOperatorOutput($fieldName, $value, QueryParserContext $context);
 }

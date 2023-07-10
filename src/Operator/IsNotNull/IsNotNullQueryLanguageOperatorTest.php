@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\IsNotNull;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarHasColorFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -22,7 +23,7 @@ class IsNotNullQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         Assert::assertInstanceOf(CarHasColorFilter::class, $result);
     }

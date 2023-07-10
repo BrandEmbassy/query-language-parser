@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\NotLike;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingNotLikeOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingNotLikeOperator extends QueryLanguageField
      *
      * @return mixed
      */
-    public function createNotLikeOperatorOutput($fieldName, $value);
+    public function createNotLikeOperatorOutput($fieldName, $value, QueryParserContext $context);
 }

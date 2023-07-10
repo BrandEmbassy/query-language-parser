@@ -16,6 +16,7 @@ use BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo\QueryLanguageFieldSuppo
 use BrandEmbassy\QueryLanguageParser\Operator\NotIn\QueryLanguageFieldSupportingNotInOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\NotLike\QueryLanguageFieldSupportingNotLikeSymbolOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use BrandEmbassy\QueryLanguageParser\Value\MultipleValuesExpressionParserCreator;
 use BrandEmbassy\QueryLanguageParser\Value\StringValueParserCreator;
 use Ferno\Loco\GrammarException;
@@ -86,61 +87,61 @@ final class CarColorQueryLanguageField
     }
 
 
-    public function createEqualToOperatorOutput($fieldName, $value): CarColorFilter
+    public function createEqualToOperatorOutput($fieldName, $value, QueryParserContext $context): CarColorFilter
     {
         return new CarColorFilter([$value]);
     }
 
 
-    public function createNotEqualToOperatorOutput($fieldName, $value): NotFilter
+    public function createNotEqualToOperatorOutput($fieldName, $value, QueryParserContext $context): NotFilter
     {
         return new NotFilter(new CarColorFilter([$value]));
     }
 
 
-    public function createLikeOperatorOutput($fieldName, $value): CarColorLikeFilter
+    public function createLikeOperatorOutput($fieldName, $value, QueryParserContext $context): CarColorLikeFilter
     {
         return new CarColorLikeFilter($value);
     }
 
 
-    public function createNotLikeOperatorOutput($fieldName, $value): NotFilter
+    public function createNotLikeOperatorOutput($fieldName, $value, QueryParserContext $context): NotFilter
     {
         return new NotFilter(new CarColorLikeFilter($value));
     }
 
 
-    public function createLikeSymbolOperatorOutput($fieldName, $value)
+    public function createLikeSymbolOperatorOutput($fieldName, $value, QueryParserContext $context)
     {
-        return $this->createLikeOperatorOutput($fieldName, $value);
+        return $this->createLikeOperatorOutput($fieldName, $value, $context);
     }
 
 
-    public function createNotLikeSymbolOperatorOutput($fieldName, $value)
+    public function createNotLikeSymbolOperatorOutput($fieldName, $value, QueryParserContext $context)
     {
-        return $this->createNotLikeOperatorOutput($fieldName, $value);
+        return $this->createNotLikeOperatorOutput($fieldName, $value, $context);
     }
 
 
-    public function createInOperatorOutput($fieldName, array $values): CarColorFilter
+    public function createInOperatorOutput($fieldName, array $values, QueryParserContext $context): CarColorFilter
     {
         return new CarColorFilter($values);
     }
 
 
-    public function createNotInOperatorOutput($fieldName, array $values): NotFilter
+    public function createNotInOperatorOutput($fieldName, array $values, QueryParserContext $context): NotFilter
     {
         return new NotFilter(new CarColorFilter($values));
     }
 
 
-    public function createIsNullOperatorOutput($fieldName): NotFilter
+    public function createIsNullOperatorOutput($fieldName, QueryParserContext $context): NotFilter
     {
         return new NotFilter(new CarHasColorFilter());
     }
 
 
-    public function createIsNotNullOperatorOutput($fieldName): CarHasColorFilter
+    public function createIsNotNullOperatorOutput($fieldName, QueryParserContext $context): CarHasColorFilter
     {
         return new CarHasColorFilter();
     }

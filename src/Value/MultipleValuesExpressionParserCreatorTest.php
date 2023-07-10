@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Value;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use BrandEmbassy\QueryLanguageParser\UnableToParseQueryException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -29,7 +30,7 @@ class MultipleValuesExpressionParserCreatorTest extends TestCase
         $parser = (new CarQueryParserFactory())->create();
         $valueToParse = 'brand IN ' . $multipleValueExpression;
 
-        $result = $parser->parse($valueToParse);
+        $result = $parser->parse($valueToParse, new QueryParserContext());
 
         assert($result instanceof CarBrandFilter);
         Assert::assertSame($expectedValues, $result->getBrands());
@@ -80,7 +81,7 @@ class MultipleValuesExpressionParserCreatorTest extends TestCase
 
         $this->expectException(UnableToParseQueryException::class);
 
-        $parser->parse($valueToParse);
+        $parser->parse($valueToParse, new QueryParserContext());
     }
 
 

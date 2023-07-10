@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\LessThan;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingLessThanOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingLessThanOperator extends QueryLanguageFiel
      *
      * @return mixed
      */
-    public function createLessThanOperatorOutput($fieldName, $value);
+    public function createLessThanOperatorOutput($fieldName, $value, QueryParserContext $context);
 }

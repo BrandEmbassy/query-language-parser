@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\EqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingEqualToOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingEqualToOperator extends QueryLanguageField
      *
      * @return mixed
      */
-    public function createEqualToOperatorOutput($fieldName, $value);
+    public function createEqualToOperatorOutput($fieldName, $value, QueryParserContext $context);
 }

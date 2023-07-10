@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator\Like;
 
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 
 interface QueryLanguageFieldSupportingLikeOperator extends QueryLanguageFieldSupportingSingleValueOperator
 {
@@ -12,5 +13,5 @@ interface QueryLanguageFieldSupportingLikeOperator extends QueryLanguageFieldSup
      *
      * @return mixed
      */
-    public function createLikeOperatorOutput($fieldName, $value);
+    public function createLikeOperatorOutput($fieldName, $value, QueryParserContext $context);
 }

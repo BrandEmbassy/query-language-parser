@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Field;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingMultipleValuesOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageFieldSupportingSingleValueOperator;
 use BrandEmbassy\QueryLanguageParser\Operator\QueryLanguageOperator;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use Ferno\Loco\GrammarException;
 use Ferno\Loco\LazyAltParser;
 use Ferno\Loco\MonoParser;
@@ -23,14 +24,17 @@ class QueryLanguageFieldGrammarFactory
      *
      * @throws GrammarException
      */
-    public function createParsers(QueryLanguageField $field, array $operators): array
-    {
+    public function createParsers(
+        QueryLanguageField $field,
+        array $operators,
+        QueryParserContext $context
+    ): array {
         $parsers = [$field->getFieldNameParserIdentifier() => $field->createFieldNameParser()];
 
         $valueParsers = $this->getValueParsers($field);
         $parsers = array_merge($parsers, $valueParsers);
 
-        $operatorParsers = $this->getOperatorParsers($field, $operators);
+        $operatorParsers = $this->getOperatorParsers($field, $operators, $context);
         $parsers = array_merge($parsers, $operatorParsers);
 
         $mainFieldParserIdentifier = $field->getFieldIdentifier();
@@ -65,14 +69,17 @@ class QueryLanguageFieldGrammarFactory
      *
      * @return MonoParser[]
      */
-    private function getOperatorParsers(QueryLanguageField $field, array $operators): array
-    {
+    private function getOperatorParsers(
+        QueryLanguageField $field,
+        array $operators,
+        QueryParserContext $context
+    ): array {
         $parsers = [];
 
         foreach ($operators as $operator) {
             if ($operator->isFieldSupported($field)) {
                 $parserIdentifier = $field->getFieldIdentifier() . '.' . $operator->getOperatorIdentifier();
-                $parsers[$parserIdentifier] = $operator->createFieldExpressionParser($field);
+                $parsers[$parserIdentifier] = $operator->createFieldExpressionParser($field, $context);
             }
         }
 

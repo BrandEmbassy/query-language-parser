@@ -4,6 +4,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\EqualTo;
 
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -23,7 +24,7 @@ class EqualToQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof CarBrandFilter);
         Assert::assertSame(['bmw'], $result->getBrands());

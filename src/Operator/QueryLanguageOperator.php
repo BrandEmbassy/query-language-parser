@@ -3,6 +3,7 @@
 namespace BrandEmbassy\QueryLanguageParser\Operator;
 
 use BrandEmbassy\QueryLanguageParser\Field\QueryLanguageField;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use Ferno\Loco\MonoParser;
 
 interface QueryLanguageOperator
@@ -16,5 +17,5 @@ interface QueryLanguageOperator
     public function isFieldSupported(QueryLanguageField $field): bool;
 
 
-    public function createFieldExpressionParser(QueryLanguageField $field): MonoParser;
+    public function createFieldExpressionParser(QueryLanguageField $field, QueryParserContext $context): MonoParser;
 }

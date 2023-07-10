@@ -5,6 +5,7 @@ namespace BrandEmbassy\QueryLanguageParser\Operator\NotEqualTo;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\CarBrandFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\Filters\NotFilter;
 use BrandEmbassy\QueryLanguageParser\Examples\Car\QueryLanguage\CarQueryParserFactory;
+use BrandEmbassy\QueryLanguageParser\QueryParserContext;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -24,7 +25,7 @@ class NotEqualToQueryLanguageOperatorTest extends TestCase
     {
         $parser = (new CarQueryParserFactory())->create();
 
-        $result = $parser->parse($query);
+        $result = $parser->parse($query, new QueryParserContext());
 
         assert($result instanceof NotFilter);
 
