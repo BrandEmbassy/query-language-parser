@@ -14,7 +14,7 @@ class PositiveIntegerValueParserCreator
 {
     use StaticClass;
 
-    private const POSITIVE_INTEGER_VALUE_REGEX = '#^[1-9][0-9]*#';
+    private const POSITIVE_INTEGER_VALUE_REGEX = '#^[1-9][0-9]{0,8}$|^1[0-9]{9}$|^2[0-1][0-4][0-7][0-4][0-8][0-3][0-6][0-4][0-7]$#';
 
 
     /**
