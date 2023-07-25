@@ -46,6 +46,10 @@ class PositiveIntegerValueParserCreatorTest extends TestCase
                 'expectedValue' => 1234567890,
                 'valueToParse' => '1234567890',
             ],
+            [
+                'expectedValue' => 2147483647,
+                'valueToParse' => '2147483647',
+            ],
         ];
     }
 
@@ -75,6 +79,8 @@ class PositiveIntegerValueParserCreatorTest extends TestCase
             ['valueToParse' => 'foo 158'],
             ['valueToParse' => 'a158'],
             ['valueToParse' => '0158'],
+            ['valueToParse' => '2147483648'],
+            ['valueToParse' => '21474836470'],
         ];
     }
 }
