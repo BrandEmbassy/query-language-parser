@@ -25,8 +25,8 @@
         "phpstan": "./vendor/bin/phpstan analyse -c phpstan.neon src",
         "phpunit": "./vendor/bin/phpunit src --no-coverage",
         "phpunit-cc": "./vendor/bin/phpunit src",
-        "test": "./vendor/bin/phpunit src"
-	"test-with-coverage": "php -dxdebug.mode=coverage ./vendor/bin/phpunit src --coverage-clover=coverage.xml --log-junit=test-report.xml"
+        "test": "./vendor/bin/phpunit src",
+	    "test-with-coverage": "php -dxdebug.mode=coverage ./vendor/bin/phpunit src --coverage-clover=coverage.xml --log-junit=test-report.xml"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
