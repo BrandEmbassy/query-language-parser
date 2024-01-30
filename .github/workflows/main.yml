@@ -94,6 +94,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          extensions: mbstring, sockets${{ matrix.php-version == '8.1' && matrix.composer-arg == 'install' && ', xdebug' || '' }}
 
       - name: Get composer cache directory
         id: composercache
@@ -111,3 +112,15 @@ jobs:
 
       - name: Run tests
         run: composer test
+        if: matrix.php-version != '8.1' && matrix.composer-arg != 'install'
+
+      - name: Run tests with coverage
+        run: composer test-with-coverage
+        if: matrix.php-version == '8.1' && matrix.composer-arg == 'install'
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        if: matrix.php-version == '8.1' && matrix.composer-arg == 'install'
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "https://sonar.nice.com"
